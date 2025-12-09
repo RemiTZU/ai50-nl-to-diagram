@@ -1,0 +1,1917 @@
+This circuit consists of a 5V voltage source connected to a 10k ohm resistor and a 100uF capacitor in parallel. The output is taken across the capacitor.,"* Simple RC circuit with voltage source
+V1 1 0 DC 5
+R1 1 2 10k
+C1 2 0 100u
+.end"
+"This is a basic inverter circuit using a 5V power supply and a 2N3904 NPN transistor. The base of the transistor is connected to a 1k ohm resistor, and the collector is connected to a 10k ohm resistor.","* NPN inverter circuit
+V1 1 0 DC 5
+R1 1 2 1k
+R2 3 1 10k
+Q1 2 3 0 2N3904
+.end"
+"This is a simple series RL circuit with a 10V power supply, a 100 ohm resistor, and a 1H inductor. The output voltage is taken across the inductor.","* Series RL circuit
+V1 1 0 DC 10
+R1 1 2 100
+L1 2 0 1
+.end"
+This circuit features a diode-connected to a 9V battery and a 1k ohm resistor. The anode of the diode is connected to the positive terminal of the battery.,"* Diode circuit with voltage source
+V1 1 0 DC 9
+R1 1 2 1k
+D1 2 0 D1N4148
+.end"
+"In this circuit, a 12V voltage source is connected to a capacitor of 220uF and a resistor of 4.7k ohms in series, with the output taken across the capacitor.","* RC charging circuit
+V1 1 0 DC 12
+R1 1 2 4.7k
+C1 2 0 220u
+.end"
+"A simple circuit consists of a 5V DC voltage source connected to a 10k ohm resistor in series with a 100uF capacitor, with the other end of the capacitor connected to ground.","* Simple RC Circuit
+V1 1 0 DC 5
+R1 1 2 10k
+C1 2 0 100u
+.end"
+"This circuit features a 5V DC source connected to a 1k ohm resistor in series with a 1mH inductor, where the inductor is also connected to ground.","* RL Circuit
+V1 1 0 DC 5
+R1 1 2 1k
+L1 2 0 1m
+.end"
+"A circuit with a 5V DC power source connected to a 1k ohm resistor, which is in series with a 470uF capacitor, and the capacitor is grounded.","* R-C Circuit
+V1 1 0 DC 5
+R1 1 2 1k
+C1 2 0 470u
+.end"
+"This is a simple diode circuit comprising a 5V DC source, a resistor of 2k ohms, and a diode (1N4148) connected in series, with the other end connected to ground.","* Diode Circuit
+V1 1 0 DC 5
+R1 1 2 2k
+D1 2 0 D1N4148
+.end"
+"A circuit containing a 5V voltage source connected to a 100 ohm resistor and a 10uF capacitor, where the capacitor is connected to the ground.","* RC Circuit
+V1 1 0 DC 5
+R1 1 2 100
+C1 2 0 10u
+.end"
+"This circuit contains a 5V DC power source in series with a 15k ohm resistor and a 1mH inductor, which is connected to ground.","* R-L Circuit
+V1 1 0 DC 5
+R1 1 2 15k
+L1 2 0 1m
+.end"
+"A simple circuit with a 5V DC source, a 220 ohm resistor, and a 10uF capacitor, the capacitor is also connected to ground in parallel with the resistor.","* Parallel R-C Circuit
+V1 1 0 DC 5
+R1 1 2 220
+C1 1 0 10u
+.end"
+"A basic circuit consists of a power supply of 5V, a 1k ohm resistor, and a BJT transistor (2N3904) that controls the current from the resistor to ground.","* BJT Circuit
+V1 1 0 DC 5
+R1 1 2 1k
+Q1 2 0 3 2N3904
+.end"
+"This circuit features a voltage source of 5V, a 4.7k ohm resistor, and a LED connected to ground through the resistor.","* LED Circuit
+V1 1 0 DC 5
+R1 1 2 4.7k
+D1 2 0 D1N4148
+.end"
+"A circuit that contains a 5V DC source, a 33 ohm resistor in series with a 100nF capacitor connected to ground.","* R-C Filter Circuit
+V1 1 0 DC 5
+R1 1 2 33
+C1 2 0 100n
+.end"
+"A simple series circuit with a 5V voltage source, a 1k ohm resistor, and a 10uF capacitor connected to ground.","* Simple series circuit
+V1 1 0 DC 5
+R1 1 2 1k
+C1 2 0 10u
+.end"
+"An RC low pass filter consisting of a 12V voltage source, a 4.7k ohm resistor, and a 100nF capacitor connected to ground.","* RC low pass filter
+V1 1 0 DC 12
+R1 1 2 4.7k
+C1 2 0 100n
+.end"
+"A voltage divider circuit with a 9V battery, a 2k ohm resistor and a 1k ohm resistor connected in series to ground.","* Voltage divider circuit
+V1 1 0 DC 9
+R1 1 2 2k
+R2 2 0 1k
+.end"
+"A simple series circuit with a 6V voltage source, a 10k ohm resistor, and a 1mH inductor connected to ground.","* Series circuit with inductor
+V1 1 0 DC 6
+R1 1 2 10k
+L1 2 0 1m
+.end"
+"An astable multivibrator consisting of two 10k ohm resistors, a 1uF capacitor, and a 5V voltage source connected to ground.","* Astable multivibrator
+V1 1 0 DC 5
+R1 1 2 10k
+R2 2 0 10k
+C1 2 0 1u
+.end"
+"A simple circuit with a 5V voltage source connected to a 10k ohm resistor, which is in series with a 100u farad capacitor.","* Simple RC Circuit
+V1 1 0 DC 5
+R1 1 2 10k
+C1 2 0 100u
+.end"
+"An RC low-pass filter circuit consisting of a 12V voltage source, a 1k ohm resistor, and a 10u farad capacitor in series.","* RC Low-Pass Filter
+V1 1 0 DC 12
+R1 1 2 1k
+C1 2 0 10u
+.end"
+"A basic LED circuit with a 9V battery, a 330 ohm resistor, and a diode connected in series.","* LED Circuit
+V1 1 0 DC 9
+R1 1 2 330
+D1 2 0 D1N4148
+.end"
+"An RLC series circuit with a 5V source, a 1k ohm resistor, a 10m henry inductor, and a 100u farad capacitor.","* RLC Series Circuit
+V1 1 0 DC 5
+R1 1 2 1k
+L1 2 3 10m
+C1 3 0 100u
+.end"
+A simple voltage divider circuit consisting of a 12V source and two resistors: 4.7k ohm and 10k ohm.,"* Voltage Divider Circuit
+V1 1 0 DC 12
+R1 1 2 4.7k
+R2 2 0 10k
+.end"
+A simple resistive voltage divider using two resistors of 10k ohms each powered by a 5V source.,"* Voltage divider circuit
+V1 1 0 DC 5
+R1 1 2 10k
+R2 2 0 10k
+.end"
+"A series circuit with a 5V voltage source, a 100uF capacitor, and a 1k ohm resistor.","* Series RC circuit
+V1 1 0 DC 5
+R1 1 2 1k
+C1 2 0 100u
+.end"
+"An RL circuit with a 5V source, a 10mH inductor, and a 220 ohm resistor in series.","* RL series circuit
+V1 1 0 DC 5
+R1 1 2 220
+L1 2 0 10m
+.end"
+A parallel combination of two 1k ohm resistors connected to a 5V power source.,"* Parallel resistors
+V1 1 0 DC 5
+R1 1 2 1k
+R2 1 3 1k
+.end"
+"A circuit consisting of a 5V source, a diode, and a 10k ohm resistor in series.","* Circuit with a diode and resistor
+V1 1 0 DC 5
+D1 1 2 D1N4001
+R1 2 0 10k
+.end"
+A simple circuit consisting of a 5V DC voltage source connected to a 1k ohm resistor and a 100uF capacitor in parallel. The other end of the resistor and capacitor is connected to ground.,"* Simple parallel RC circuit
+V1 1 0 DC 5
+R1 1 2 1k
+C1 2 0 100u
+.end"
+"A series circuit with a 10V DC power supply, a 4.7k ohm resistor, and a 22uF capacitor. The capacitor is connected to ground.","* Series RC circuit
+V1 1 0 DC 10
+R1 1 2 4.7k
+C1 2 0 22u
+.end"
+"A circuit with a 12V voltage source, a 330 ohm resistor, and a 1mH inductor in series, connected to ground.","* Series RL circuit
+V1 1 0 DC 12
+R1 1 2 330
+L1 2 0 1m
+.end"
+"A simple circuit with a 9V voltage source feeding into a 10k ohm resistor in series with a diode, connected to ground.","* Series R-Diode circuit
+V1 1 0 DC 9
+R1 1 2 10k
+D1 2 0 D1N4148
+.end"
+"A circuit with a 15V power source, a 1k ohm resistor, and an NPN transistor (2N3904) connected to ground. The base of the transistor is driven by the voltage source through the resistor.","* Circuit with NPN transistor
+V1 1 0 DC 15
+R1 1 2 1k
+Q1 2 3 0 2N3904
+.end"
+A voltage source of 5V is connected to a 10k ohm resistor in series with a capacitor of 100uF which is grounded.,"* A simple series RC circuit
+V1 1 0 DC 5
+R1 1 2 10k
+C1 2 0 100u
+.end"
+"A 12V power supply connected to a 1k ohm resistor and a diode labeled 1N4148 in series, with the diode connected to ground.","* Series circuit with resistor and diode
+V1 1 0 DC 12
+R1 1 2 1k
+D1 2 0 D1N4148
+.end"
+"A 9V battery connected to a 4.7k ohm resistor, which is in parallel with a 10uF capacitor to ground.","* Parallel RC circuit
+V1 1 0 DC 9
+R1 1 2 4.7k
+C1 2 0 10u
+.end"
+"A power supply of 6V powering a series combination of a 100 ohm resistor, a 1mH inductor, and a ground connection.","* Series R and L circuit
+V1 1 0 DC 6
+R1 1 2 100
+L1 2 0 1m
+.end"
+"A 15V source connected to a load consisting of a 220 ohm resistor in series with a capacitor of 470nF, grounded.","* Series RC load
+V1 1 0 DC 15
+R1 1 2 220
+C1 2 0 470n
+.end"
+A simple circuit with a 5V voltage source connected to a 1k ohm resistor in series with a 100uF capacitor to ground.,"* Simple resistor-capacitor circuit
+V1 1 0 DC 5
+R1 1 2 1k
+C1 2 0 100u
+.end"
+"A circuit consisting of a 9V battery, a 10k ohm resistor, and a 220uF capacitor in parallel with a diode (1N4148) to ground.","* Capacitor with diode parallel circuit
+V1 1 0 DC 9
+R1 1 2 10k
+C1 2 0 220u
+D1 2 0 D1N4148
+.end"
+"A basic circuit with a 12V power supply, a 1k ohm resistor, and a 100mH inductor connected in series.","* Resistor and inductor series circuit
+V1 1 0 DC 12
+R1 1 2 1k
+L1 2 0 100m
+.end"
+A circuit with a 15V source and a BJT transistor (2N3904) driving a 4.7k ohm resistor to ground.,"* Transistor driving circuit
+V1 1 0 DC 15
+Q1 1 2 3 2N3904
+R1 2 0 4.7k
+.end"
+A power supply of 3.3V connected to a 220 ohm resistor and a 10uF capacitor in parallel to ground.,"* Parallel capacitor-resistor circuit
+V1 1 0 DC 3.3
+R1 1 2 220
+C1 1 0 10u
+.end"
+A simple circuit consisting of a 5V DC voltage source connected to a 10k ohm resistor and a 100uF capacitor in series.,"* Simple RC circuit
+V1 1 0 DC 5
+R1 1 2 10k
+C1 2 0 100u
+.end"
+"A basic RLC circuit with a 12V DC voltage source, a 1k ohm resistor, a 10mH inductor, and a 100nF capacitor in series.","* Basic RLC circuit
+V1 1 0 DC 12
+R1 1 2 1k
+L1 2 3 10m
+C1 3 0 100n
+.end"
+"A circuit containing a 9V DC voltage source, a 47k ohm resistor, and a diode connected in series.","* Circuit with diode
+V1 1 0 DC 9
+R1 1 2 47k
+D1 2 0 D1N4001
+.end"
+"A voltage divider circuit made of a 5V voltage source and two resistors, 1k ohm and 2k ohm, connected in series.","* Voltage divider circuit
+V1 1 0 DC 5
+R1 1 2 1k
+R2 2 0 2k
+.end"
+"A simple LED circuit with a 5V voltage source, a 330 ohm resistor, and a LED (assumed to be a 1N4148 diode) in series.","* LED circuit
+V1 1 0 DC 5
+R1 1 2 330
+D1 2 0 1N4148
+.end"
+A simple series circuit consisting of a 5V battery and a 10k ohm resistor connected to ground.,"* Simple series circuit
+V1 1 0 DC 5
+R1 1 2 10k
+.end"
+"An RC low-pass filter with a 5V input voltage source, a resistor of 1k ohms, and a capacitor of 100 microfarads.","* RC low-pass filter
+V1 1 0 DC 5
+R1 1 2 1k
+C1 2 0 100u
+.end"
+"A parallel circuit with a 5V source, a 10k ohm resistor, and a 1uF capacitor connected to ground.","* Parallel circuit
+V1 1 0 DC 5
+R1 1 2 10k
+C1 1 0 1u
+.end"
+"A series RLC circuit with a 5V source, a 10k ohm resistor, a 1mH inductor, and a 10uF capacitor.","* Series RLC circuit
+V1 1 0 DC 5
+R1 1 2 10k
+L1 2 3 1m
+C1 3 0 10u
+.end"
+A basic diode circuit where a 5V battery is connected in series with a 1N4148 diode and a 1k ohm resistor.,"* Diode circuit
+V1 1 0 DC 5
+D1 1 2 D1N4148
+R1 2 0 1k
+.end"
+A simple series circuit with a 5V voltage source and a 1k ohm resistor.,"* A simple series circuit with a voltage source and resistor
+V1 1 0 DC 5
+R1 1 2 1k
+.end"
+"An RC low-pass filter including a 5V voltage source, a 1k ohm resistor, and a 10uF capacitor.","* An RC low-pass filter circuit
+V1 1 0 DC 5
+R1 1 2 1k
+C1 2 0 10u
+.end"
+"A basic circuit with a 5V voltage source, a 1k ohm resistor, and a diode in series.","* Basic circuit with voltage source, resistor, and diode
+V1 1 0 DC 5
+R1 1 2 1k
+D1 2 0 1N4148
+.end"
+"A simple circuit consisting of a voltage source, a resistor, and an inductor in series.","* Simple series circuit with voltage source, resistor, and inductor
+V1 1 0 DC 5
+R1 1 2 1k
+L1 2 0 1m
+.end"
+"A basic circuit with a voltage source, a resistor, and a capacitor in parallel.","* Basic parallel circuit with voltage source, resistor, and capacitor
+V1 1 0 DC 5
+R1 1 2 1k
+C1 1 0 10u
+.end"
+"An RL circuit consisting of a 9V voltage source, a 1k ohm resistor, and a 100mH inductor in series.","* RL circuit with voltage source, resistor, and inductor
+V1 1 0 DC 9
+R1 1 2 1k
+L1 2 0 100m
+.end"
+This circuit consists of a 5V voltage source connected to a 1k resistor in series with a 10uF capacitor. The capacitor is connected to ground.,"* Circuit with a voltage source, resistor, and capacitor
+V1 1 0 DC 5
+R1 1 2 1k
+C1 2 0 10u
+.end"
+"This is a basic RC circuit with a 3V voltage source, a 2k resistor, and a 1uF capacitor.","* Basic RC circuit with 3V source
+V1 1 0 DC 3
+R1 1 2 2k
+C1 2 0 1u
+.end"
+"This circuit features a 9V battery powering a 1k resistor and a diode in series, with the diode connected to ground.","* Circuit with a battery, resistor, and diode
+V1 1 0 DC 9
+R1 1 2 1k
+D1 2 0 1N4148
+.end"
+"This is an RLC circuit with a 12V source, a 100 ohm resistor, a 10uF capacitor, and a 1mH inductor connected in series.","* Series RLC circuit with a voltage source
+V1 1 0 DC 12
+R1 1 2 100
+C1 2 3 10u
+L1 3 0 1m
+.end"
+This circuit has a 6V voltage source connected to a series combination of a 330 ohm resistor and a BJT transistor configured as a switch.,"* BJT switch circuit with a voltage source and resistor
+V1 1 0 DC 6
+R1 1 2 330
+Q1 2 3 0 2N3904
+.end"
+"This circuit contains a 15V voltage source, a 220 ohm resistor, and a parallel combination of a 10uF capacitor and a diode.","* Circuit with voltage source, resistor, capacitor, and diode in parallel
+V1 1 0 DC 15
+R1 1 2 220
+C1 2 3 10u
+D1 2 3 1N4148
+.end"
+A simple resistive voltage divider using two resistors and a voltage source.,"* Voltage divider circuit
+V1 1 0 DC 10
+R1 1 2 1k
+R2 2 0 2k
+.end"
+An RC low-pass filter with a resistor and capacitor connected to a voltage source.,"* RC low-pass filter
+V1 1 0 DC 5
+R1 1 2 10k
+C1 2 0 100u
+.end"
+A basic LC tank circuit consisting of an inductor and capacitor connected in parallel to a voltage source.,"* LC tank circuit
+V1 1 0 DC 5
+L1 1 2 1m
+C1 2 0 10u
+.end"
+"A BJT amplifier circuit using a transistor, a voltage source, and two resistors.","* BJT amplifier
+V1 1 0 DC 12
+R1 1 2 1k
+R2 2 3 10k
+Q1 3 2 0 2N3904
+.end"
+A simple diode rectifier circuit with a voltage source and a load resistor.,"* Diode rectifier circuit
+V1 1 0 AC 5
+D1 1 2 D1N4148
+R1 2 0 1k
+.end"
+An RC charging circuit with a capacitor and a resistor in series with a voltage source.,"* RC charging circuit
+V1 1 0 DC 9
+R1 1 2 4.7k
+C1 2 0 47u
+.end"
+A simple circuit with a 5V battery connected to a resistor of 1k and a diode in series.,"* Circuit with a battery, resistor, and diode
+V1 1 0 DC 5
+R1 1 2 1k
+D1 2 0 D1N4148
+.end"
+A circuit consisting of a 10V battery connected to a 1k resistor and a 10uF capacitor in parallel.,"* Circuit with a battery, resistor, and capacitor
+V1 1 0 DC 10
+R1 1 2 1k
+C1 2 0 10u
+.end"
+"A circuit containing a 12V power supply, a 2k resistor, and a NPN transistor as a switch.","* Circuit with a battery, resistor, and BJT
+V1 1 0 DC 12
+R1 1 2 2k
+Q1 2 3 0 2N3904
+.end"
+A passive high-pass filter composed of a capacitor and a resistor connected to a 5V source.,"* High-pass filter with capacitor and resistor
+V1 1 0 DC 5
+C1 1 2 1u
+R1 2 0 1k
+.end"
+"A basic LED circuit with a 9V battery, a resistor, and a diode to represent the LED.","* LED circuit with battery, resistor, and diode
+V1 1 0 DC 9
+R1 1 2 330
+D1 2 0 D1N4148
+.end"
+A simple resistor divider circuit powered by a 10V DC source with two resistors of 1k and 2k ohms.,"* A simple resistor divider circuit
+V1 1 0 DC 10
+R1 1 2 1k
+R2 2 0 2k
+.end"
+"An RC low-pass filter using a 5V DC source, a resistor of 10k ohms, and a capacitor of 100nF.","* An RC low-pass filter
+V1 1 0 DC 5
+R1 1 2 10k
+C1 2 0 100n
+.end"
+"A series circuit with a voltage source of 15V, a resistor of 100 ohms, and a diode.","* A series circuit with a diode
+V1 1 0 DC 15
+R1 1 2 100
+D1 2 0 1N4148
+.end"
+"A parallel connection of a 5V DC source, a 1k ohm resistor and a 1uF capacitor.","* A parallel RC circuit
+V1 1 0 DC 5
+R1 1 2 1k
+C1 1 0 1u
+.end"
+"A basic transistor switch circuit using a 12V source, a 2N3904 transistor, and a 1k ohm resistor.","* A basic transistor switch circuit
+V1 1 0 DC 12
+R1 1 2 1k
+Q1 2 3 0 2N3904
+.end"
+A simple resistive voltage divider with two resistors and a 5V DC source.,"* Simple resistive voltage divider
+V1 1 0 DC 5
+R1 1 2 1k
+R2 2 0 2k
+.end"
+An RC low-pass filter with a capacitor and a resistor connected to a 10V DC source.,"* RC low-pass filter
+V1 1 0 DC 10
+R1 1 2 1k
+C1 2 0 1u
+.end"
+A circuit with a diode in series with a resistor and a 12V DC source.,"* Diode in series with resistor
+V1 1 0 DC 12
+R1 1 2 1k
+D1 2 0 1N4148
+.end"
+"A BJT amplifier using a 5V DC source, with a resistor and a capacitor for coupling.","* BJT amplifier
+V1 1 0 DC 5
+R1 1 2 10k
+C1 2 3 10u
+Q1 3 2 0 2N3904
+.end"
+An RLC series circuit connected to a 9V DC source.,"* RLC series circuit
+V1 1 0 DC 9
+R1 1 2 1k
+L1 2 3 10m
+C1 3 0 1u
+.end"
+"A simple voltage divider consisting of two resistors R1 and R2 connected in series, powered by a 5V source.","* Simple voltage divider
+V1 1 0 DC 5
+R1 1 2 1k
+R2 2 0 2k
+.end"
+"An RC low-pass filter with a resistor R1 and a capacitor C1 connected in series, driven by a 10V voltage source.","* RC low-pass filter
+V1 1 0 DC 10
+R1 1 2 1k
+C1 2 0 1u
+.end"
+"A basic transistor switch using an NPN transistor Q1, with a pull-down resistor R1, powered by a 12V source.","* NPN transistor switch
+V1 1 0 DC 12
+R1 2 0 10k
+Q1 2 3 0 2N3904
+.end"
+An astable multivibrator circuit using two capacitors and two resistors connected to a 9V power supply.,"* Astable multivibrator
+V1 1 0 DC 9
+R1 1 2 4.7k
+R2 2 3 4.7k
+C1 2 0 10u
+C2 3 0 10u
+.end"
+"A simple series arrangement of an inductor L1 and a resistor R1, connected to a 15V voltage source.","* Series inductor and resistor
+V1 1 0 DC 15
+R1 1 2 100
+L1 2 0 10m
+.end"
+A circuit consisting of a diode D1 connected to a 5V power source and a load resistor R1.,"* Diode circuit
+V1 1 0 DC 5
+R1 2 0 220
+D1 1 2 D1N4148
+.end"
+"A simple resistive voltage divider circuit with two resistors, R1 and R2, powered by a 5V DC source.","* Simple resistive voltage divider
+V1 1 0 DC 5
+R1 1 2 1k
+R2 2 0 2k
+.end"
+An RC low-pass filter with a resistor and capacitor connected to a 5V DC voltage source.,"* RC low-pass filter
+V1 1 0 DC 5
+R1 1 2 1k
+C1 2 0 1u
+.end"
+"A simple series circuit with a voltage source, a resistor, and an inductor.","* Series circuit with R and L
+V1 1 0 DC 5
+R1 1 2 1k
+L1 2 0 10m
+.end"
+A circuit with a diode in forward bias connected to a 5V source and a resistor.,"* Diode circuit
+V1 1 0 DC 5
+R1 1 2 1k
+D1 2 0 D1N4148
+.end"
+"A transistor switching circuit with a BJT, a resistor, and a voltage source.","* BJT switching circuit
+V1 1 0 DC 5
+R1 1 2 1k
+Q1 2 3 0 2N3904
+.end"
+"A simple series RLC circuit with a voltage source, a resistor, an inductor, and a capacitor.","* Series RLC circuit
+V1 1 0 DC 5
+R1 1 2 1k
+L1 2 3 10m
+C1 3 0 1u
+.end"
+A simple resistive voltage divider circuit consisting of two resistors connected in series between a voltage source and ground.,"* Simple Voltage Divider Circuit
+V1 1 0 DC 10
+R1 1 2 1k
+R2 2 0 2k
+.end"
+A basic low-pass RC filter formed by a resistor and a capacitor connected in series with a voltage source.,"* Basic Low-Pass RC Filter
+V1 1 0 DC 5
+R1 1 2 1k
+C1 2 0 10u
+.end"
+"A series circuit with a voltage source, a resistor, and an inductor, showcasing basic R-L circuit behavior.","* R-L Series Circuit
+V1 1 0 DC 12
+R1 1 2 1k
+L1 2 0 100m
+.end"
+An LED connected in series with a current-limiting resistor to a DC voltage source.,"* LED with Current-Limiting Resistor
+V1 1 0 DC 5
+R1 1 2 330
+D1 2 0 D1N4148
+.end"
+A simple transistor switch circuit using an NPN transistor to control an LED through a resistor.,"* Transistor Switch Circuit
+V1 1 0 DC 12
+R1 1 2 4.7k
+Q1 2 3 0 2N3904
+R2 3 0 1k
+D1 4 0 D1N4148
+.end"
+A basic parallel RC circuit connected to a DC voltage source to demonstrate charging and discharging behavior.,"* Parallel RC Circuit
+V1 1 0 DC 10
+R1 1 2 1k
+C1 1 0 100u
+.end"
+"This circuit consists of a battery, a resistor, and a capacitor in series, forming an RC charging circuit.","* RC Charging Circuit
+V1 1 0 DC 10
+R1 1 2 1k
+C1 2 0 10u
+.end"
+This circuit features a voltage divider with two resistors connected to a voltage source.,"* Voltage Divider Circuit
+V1 1 0 DC 5
+R1 1 2 2k
+R2 2 0 3k
+.end"
+"This is a simple series circuit with a current source, a resistor, and a capacitor.","* Series Circuit with Current Source
+I1 1 0 DC 2m
+R1 1 2 1k
+C1 2 0 100n
+.end"
+This circuit includes a voltage source feeding a resistor and an inductor in series.,"* Series RL Circuit
+V1 1 0 DC 12
+R1 1 2 4k
+L1 2 0 1m
+.end"
+"This circuit consists of a transistor as a switch to control a load resistor, powered by a voltage source.","* Transistor Switch Circuit
+V1 1 0 DC 5
+R1 1 2 1k
+Q1 3 2 0 2N3904
+R2 3 0 5k
+.end"
+"This circuit consists of a 5V voltage source, a 1k resistor connected in series with a 1uF capacitor, and a diode (D1N4148) connected to ground.","* Circuit with voltage source, resistor, capacitor, and diode
+V1 1 0 DC 5
+R1 1 2 1k
+C1 2 0 1u
+D1 2 0 D1N4148
+.MODEL D1N4148 D(IS=2.52E-9)
+.end"
+"This is a basic RC low-pass filter circuit made up of a 10V voltage source, a 10k resistor, and a 100nF capacitor.","* RC low-pass filter circuit
+V1 1 0 DC 10
+R1 1 2 10k
+C1 2 0 100n
+.end"
+"This circuit features a 12V DC source, a current source of 5mA, and a load resistor of 1k ohms.","* Circuit with voltage and current source
+V1 1 0 DC 12
+I1 2 0 DC 5m
+R1 1 2 1k
+.end"
+"This is a simple series circuit with a voltage source, a resistor, and an inductor.
+","* Series circuit with voltage source, resistor, and inductor
+V1 1 0 DC 15
+R1 1 2 220
+L1 2 0 10m
+.end"
+"A circuit that combines a voltage source, a resistor, and an npn transistor in common-emitter configuration.","* Common-emitter transistor circuit
+V1 1 0 DC 9
+R1 1 2 4.7k
+Q1 2 3 0 2N3904
+.MODEL 2N3904 NPN(IS=1E-16 BF=100)
+.end"
+This circuit includes a 1.5V battery connected to a 100 ohm resistor and a 10uF capacitor in parallel.,"* Parallel RC circuit
+V1 1 0 DC 1.5
+R1 1 2 100
+C1 1 3 10u
+.end"
+"A simple series circuit with a 5V voltage source, a 1k resistor, and a 10uF capacitor.","* Simple series circuit with a voltage source and passive components
+V1 1 0 DC 5
+R1 1 2 1k
+C1 2 0 10u
+.end"
+"A circuit with a 12V source, a 2k resistor, and a diode in series.","* Circuit with a voltage source, a resistor, and a diode
+V1 1 0 DC 12
+R1 1 2 2k
+D1 2 0 D1N4148
+.end"
+"An RC low-pass filter with a 5V source, a 1k resistor, and a 100nF capacitor.","* RC low-pass filter
+V1 1 0 DC 5
+R1 1 2 1k
+C1 2 0 100n
+.end"
+"A simple transistor switch circuit with a 9V source, a 1k resistor, and a BJT.","* Transistor switch circuit
+V1 1 0 DC 9
+R1 1 2 1k
+Q1 2 3 0 2N3904
+.end"
+"A basic RL circuit featuring a 10V source, a 100m resistor, and a 10mH inductor.","* Basic RL circuit
+V1 1 0 DC 10
+R1 1 2 100m
+L1 2 0 10mH
+.end"
+"A circuit with a voltage source of 15V, a 470 ohm resistor, and a capacitor of 100uF.","* Circuit with a voltage source, resistor, and capacitor
+V1 1 0 DC 15
+R1 1 2 470
+C1 2 0 100u
+.end"
+A simple series circuit with a 5V battery and a 1k ohm resistor.,"* A simple series circuit with a 5V battery and a resistor
+V1 1 0 DC 5
+R1 1 2 1k
+.end"
+"A parallel circuit consisting of a 10V battery, a 1k ohm resistor, and a 2k ohm resistor.","* A parallel circuit with a voltage source and two resistors
+V1 1 0 DC 10
+R1 1 2 1k
+R2 1 3 2k
+.end"
+"A basic RC circuit with a 5V power supply, a 1uF capacitor, and a 1k ohm resistor in series.","* A basic RC circuit with a power supply, capacitor, and resistor
+V1 1 0 DC 5
+R1 1 2 1k
+C1 2 0 1u
+.end"
+"A simple RLC circuit with a 5V voltage source, a 1k ohm resistor, a 1mH inductor, and a 10uF capacitor.","* A simple RLC circuit with a voltage source, inductor, and capacitor
+V1 1 0 DC 5
+R1 1 2 1k
+L1 2 3 1m
+C1 3 0 10u
+.end"
+"A circuit consisting of a 9V battery, a diode, and a 220 ohm resistor in series.","* A circuit with a voltage source, diode, and resistor in series
+V1 1 0 DC 9
+D1 1 2 D1N4148
+R1 2 0 220
+.end"
+"A transistor switch circuit with a 12V battery, a 10k ohm base resistor, and a 2N3904 NPN transistor.","* A transistor switch circuit with a voltage source, base resistor, and transistor
+V1 1 0 DC 12
+R1 1 2 10k
+Q1 2 3 0 2N3904
+.end"
+A simple series circuit with a 5V voltage source and a 1kΩ resistor.,"* Simple series circuit with a voltage source and a resistor
+V1 1 0 DC 5
+R1 1 2 1k
+.end"
+"An RC low-pass filter using a 5V voltage source, a 1kΩ resistor, and a 10uF capacitor.","* RC low-pass filter
+V1 1 0 DC 5
+R1 1 2 1k
+C1 2 0 10u
+.end"
+"A basic series circuit consisting of a 5V source, a 1kΩ resistor, and a 10uF capacitor in parallel with a 1kΩ load resistor.","* Series circuit with capacitor and load resistor
+V1 1 0 DC 5
+R1 1 2 1k
+C1 2 0 10u
+R2 2 0 1k
+.end"
+"A circuit with a 5V source, a 1kΩ resistor, and a diode connected in series to allow current flow in one direction.","* Circuit with a diode
+V1 1 0 DC 5
+R1 1 2 1k
+D1 2 0 D1N4148
+.end"
+"A simple transistor switch using a 5V voltage source, a 1kΩ base resistor, and a 2N3904 transistor controlling a load resistor.","* Transistor switch circuit
+V1 1 0 DC 5
+R1 1 2 1k
+Q1 2 3 0 2N3904
+R2 3 0 1k
+.end"
+A simple series circuit with a 5V voltage source and a resistor of 1k ohm.,"* Simple series circuit with a voltage source and a resistor
+V1 1 0 DC 5
+R1 1 2 1k
+.end"
+A circuit with a 5V voltage source and a 10uF capacitor in parallel with a 2k ohm resistor.,"* Circuit with voltage source, capacitor, and resistor in parallel
+V1 1 0 DC 5
+R1 1 2 2k
+C1 2 0 10u
+.end"
+A voltage divider circuit using two resistors: 1k ohm and 2k ohm connected to a 12V source.,"* Voltage divider circuit with two resistors
+V1 1 0 DC 12
+R1 1 2 1k
+R2 2 0 2k
+.end"
+"An RC low-pass filter with a 5V voltage source, a 1k ohm resistor, and a 100nF capacitor.","* RC low-pass filter circuit
+V1 1 0 DC 5
+R1 1 2 1k
+C1 2 0 100n
+.end"
+"A common-emitter BJT amplifier using a 10V source, a 1k ohm load resistor, and a transistor.","* Common-emitter BJT amplifier circuit
+V1 1 0 DC 10
+R1 1 2 1k
+Q1 2 3 0 2N3904
+.end"
+A simple series circuit with a 9V source and a 220 ohm resistor connected to an LED modeled as a diode.,"* Simple series circuit with a voltage source and LED
+V1 1 0 DC 9
+R1 1 2 220
+D1 2 0 D1N4148
+.end"
+"A simple resistor-capacitor (RC) low-pass filter with a voltage source of 5V, a resistor of 1k ohm, and a capacitor of 10u farads.","* RC Low-Pass Filter
+V1 1 0 DC 5
+R1 1 2 1k
+C1 2 0 10u
+.end"
+"A basic voltage divider with two resistors, where the input is 12V, and the resistors are 2k ohms and 3k ohms.","* Voltage Divider
+V1 1 0 DC 12
+R1 1 2 2k
+R2 2 0 3k
+.end"
+An inductor connected in series with a voltage source of 9V and a resistor of 100 ohms.,"* Series RL Circuit
+V1 1 0 DC 9
+R1 1 2 100
+L1 2 0 10m
+.end"
+"A circuit with a power source of 5V, a capacitor of 1u farad, and a diode which allows current to flow only in one direction.","* Capacitor with Diode
+V1 1 0 DC 5
+C1 1 2 1u
+D1 2 0 D1N4148
+.end"
+"A simple transistor amplifier circuit with a voltage source, resistor, and a BJT transistor.","* Common Emitter Amplifier
+V1 1 0 DC 10
+R1 1 2 4.7k
+Q1 2 3 0 2N3904
+.end"
+"A simple series circuit with a 5V voltage source, a 1k resistor, and a diode (1N4148).","* Simple series circuit with a voltage source and a resistor.
+V1 1 0 DC 5
+R1 1 2 1k
+D1 2 0 1N4148
+.end"
+"An RC low-pass filter consisting of a 10V voltage source, a 10k resistor, and a 100nF capacitor.","* RC low-pass filter circuit.
+V1 1 0 DC 10
+R1 1 2 10k
+C1 2 0 100n
+.end"
+A simple circuit with a current source and a resistor in parallel. The circuit includes a 2mA current source and a 1k resistor.,"* Current source in parallel with a resistor.
+I1 1 0 DC 2m
+R1 1 2 1k
+.end"
+"A basic RLC series circuit featuring a 15V supply, a 1k resistor, a 10uF capacitor, and a 10mH inductor.","* RLC series circuit with voltage source.
+V1 1 0 DC 15
+R1 1 2 1k
+C1 2 0 10u
+L1 2 0 10m
+.end"
+"A circuit with a 9V battery, an NPN transistor (2N3904), a resistor, and a capacitor for coupling.","* Basic transistor amplifier circuit.
+V1 1 0 DC 9
+R1 1 2 4.7k
+C1 2 0 1u
+Q1 3 2 0 2N3904
+.end"
+"An oscillator circuit with a 5V supply, including a resistor, a capacitor, and a transistor (2N3904) used as a switch.","* Simple oscillator circuit using a transistor.
+V1 1 0 DC 5
+R1 1 2 10k
+C1 2 3 10u
+Q1 3 2 0 2N3904
+.end"
+A simple voltage divider circuit with two resistors connected in series to a 5V voltage source.,"* Voltage divider circuit
+V1 1 0 DC 5
+R1 1 2 1k
+R2 2 0 2k
+.end"
+An RC low-pass filter consisting of a resistor and capacitor in series with a voltage source.,"* RC low-pass filter
+V1 1 0 DC 5
+R1 1 2 1k
+C1 2 0 10u
+.end"
+"A basic transistor switch circuit with an NPN transistor controlling a load resistor, powered by a 5V source.","* NPN transistor switch circuit
+V1 1 0 DC 5
+R1 1 2 1k
+R2 2 0 1k
+Q1 3 2 0 2N3904
+.end"
+A simple series RLC circuit powered by a 10V AC source.,"* Series RLC circuit
+V1 1 0 AC 10
+R1 1 2 100
+L1 2 3 10m
+C1 3 0 1u
+.end"
+"A basic diode rectifier circuit with a load resistor, connected to a 12V AC source.","* Basic diode rectifier circuit
+V1 1 0 AC 12
+D1 1 2 D1N4148
+R1 2 0 1k
+.end"
+A simple circuit consisting of a 5V voltage source connected in series with a 1k ohm resistor and a 10uF capacitor. The capacitor is connected to ground.,"* Simple RC Circuit
+V1 1 0 DC 5
+R1 1 2 1k
+C1 2 0 10u
+.end"
+A voltage divider circuit made with a 10k ohm resistor and a 20k ohm resistor connected to a 10V voltage source.,"* Voltage Divider Circuit
+V1 1 0 DC 10
+R1 1 2 10k
+R2 2 0 20k
+.end"
+"A basic astable multivibrator circuit using a 555 timer, powered by a 9V battery, and composed of two resistors and one capacitor.","* Astable Multivibrator Circuit
+V1 1 0 DC 9
+R1 1 2 1k
+R2 2 3 10k
+C1 3 0 100n
+.end"
+"A circuit with a 12V supply connected to a 100 ohm resistor in series with a diode, which is directly connected to ground.","* Diode with Resistor Circuit
+V1 1 0 DC 12
+R1 1 2 100
+D1 2 0 1N4148
+.end"
+A simple LC circuit consisting of a 1 henry inductor and a 10uF capacitor connected across a 5V voltage source.,"* LC Circuit
+V1 1 0 DC 5
+L1 1 2 1
+C1 2 0 10u
+.end"
+A circuit featuring a 9V battery connected to a 330 ohm resistor and a 2N3904 transistor in a common emitter configuration.,"* Common Emitter Transistor Circuit
+V1 1 0 DC 9
+R1 1 2 330
+Q1 2 3 0 2N3904
+.end"
+"A simple resistive divider with two resistors and a voltage source, providing a lower voltage output.","* Voltage divider circuit
+V1 1 0 DC 10
+R1 1 2 1k
+R2 2 0 2k
+.end"
+An RC low-pass filter using a resistor and a capacitor connected to a voltage source.,"* RC low-pass filter
+V1 1 0 DC 5
+R1 1 2 1k
+C1 2 0 1u
+.end"
+"A basic RLC series circuit with a resistor, inductor, and capacitor connected to a voltage source.","* RLC series circuit
+V1 1 0 DC 15
+R1 1 2 1k
+L1 2 3 10m
+C1 3 0 100n
+.end"
+"A simple circuit with a voltage source, a resistor, and a diode allowing current flow in one direction.","* Resistor and diode circuit
+V1 1 0 DC 12
+R1 1 2 2k
+D1 2 0 D1N4148
+.end"
+"A circuit with a transistor as a switch, using a voltage source and a load resistor.","* Transistor switch circuit
+V1 1 0 DC 9
+R1 1 2 4.7k
+Q1 2 3 0 2N3904
+R2 3 0 1k
+.end"
+An op-amp circuit configured as a non-inverting amplifier with a resistor in the feedback loop.,"* Non-inverting amplifier circuit
+V1 1 0 DC 5
+R1 1 2 10k
+R2 2 0 1k
+X1 0 1 2 OPAMP
+.end"
+A simple series circuit consisting of a 5V voltage source and a 1k ohm resistor.,"* A simple series circuit with a voltage source and resistor
+V1 1 0 DC 5
+R1 1 2 1k
+.end"
+"A parallel circuit with a 5V source, one 1k ohm resistor, and one 10uF capacitor.","* A parallel circuit with a voltage source, resistor, and capacitor
+V1 1 0 DC 5
+R1 1 2 1k
+C1 1 0 10u
+.end"
+"An RL circuit consisting of a 10V voltage source, a 100 ohm resistor, and a 10mH inductor.","* An RL circuit with a voltage source, resistor, and inductor
+V1 1 0 DC 10
+R1 1 2 100
+L1 2 0 10m
+.end"
+"A circuit with a 5V source, a 1k ohm resistor, and a diode in series.","* A series circuit with a voltage source, resistor, and diode
+V1 1 0 DC 5
+R1 1 2 1k
+D1 2 0 D1N4148
+.model D1N4148 D(IS=2.52E-9)
+.end"
+"A BJT circuit with a 12V source, a 1k ohm base resistor, and a 2N3904 transistor.","* A BJT circuit with voltage source, base resistor, and transistor
+V1 1 0 DC 12
+R1 1 2 1k
+Q1 3 2 0 2N3904
+.model 2N3904 NPN(IS=1E-14 BF=100)
+.end"
+A simple resistive divider with two resistors connected in series across a 10V voltage source.,"* Simple resistive voltage divider
+V1 1 0 DC 10
+R1 1 2 5k
+R2 2 0 5k
+.end"
+A low-pass RC filter formed by a resistor and capacitor connected in series with a 12V voltage source.,"* Low-pass RC filter
+V1 1 0 DC 12
+R1 1 2 1k
+C1 2 0 10u
+.end"
+"An RLC series circuit including a resistor, inductor and capacitor powered by a 15V source.","* RLC series circuit
+V1 1 0 DC 15
+R1 1 2 1k
+L1 2 3 10m
+C1 3 0 100n
+.end"
+A simple circuit with a diode in series with a resistor and powered by a 9V battery.,"* Diode in series with resistor
+V1 1 0 DC 9
+R1 1 2 1k
+D1 2 0 1N4148
+.end"
+A basic NPN transistor amplifier circuit with a resistor in the collector and emitter connected to ground.,"* NPN transistor amplifier
+V1 1 0 DC 5
+R1 1 2 4.7k
+R2 2 0 1k
+Q1 3 2 0 2N3904
+.end"
+"A circuit with two series diodes and a 5V power supply, with a load resistor.","* Series diodes with load resistor
+V1 1 0 DC 5
+D1 1 2 1N4148
+D2 2 0 1N4148
+R1 2 0 1k
+.end"
+A simple resistive voltage divider with two resistors connected across a 5V supply.,"* Voltage divider circuit
+V1 1 0 DC 5
+R1 1 2 10k
+R2 2 0 5k
+.end"
+A series circuit with a 12V battery and a resistor and a capacitor in series.,"* Series RC circuit
+V1 1 0 DC 12
+R1 1 2 1k
+C1 2 0 100u
+.end"
+"An RC low-pass filter circuit with a 10V voltage source, a resistor and a capacitor.","* Low-pass filter circuit
+V1 1 0 DC 10
+R1 1 2 1k
+C1 2 0 10u
+.end"
+"A basic RLC series circuit with a 9V power supply, a resistor, an inductor, and a capacitor.","* RLC series circuit
+V1 1 0 DC 9
+R1 1 2 100
+L1 2 3 1m
+C1 3 0 10u
+.end"
+A circuit with a current source and two resistors in parallel.,"* Parallel resistor circuit with current source
+I1 1 0 DC 100m
+R1 1 2 2k
+R2 1 3 4k
+.end"
+A simple diode circuit with a voltage source and a load resistor.,"* Diode circuit with load
+V1 1 0 DC 5
+R1 2 0 1k
+D1 1 2 D1N4148
+.end"
+"A simple circuit with a 5V DC voltage source, a 1k ohm resistor, and a 10uF capacitor in series.","* Simple RC circuit
+V1 1 0 DC 5
+R1 1 2 1k
+C1 2 0 10u
+.end"
+"A series circuit consisting of a 9V DC source, a 2k ohm resistor, and a 100nF capacitor.","* Series RC circuit
+V1 1 0 DC 9
+R1 1 2 2k
+C1 2 0 100n
+.end"
+A circuit with a 12V DC voltage source and a 10k ohm resistor in parallel with a 220uF capacitor.,"* Parallel RC circuit
+V1 1 0 DC 12
+R1 1 2 10k
+C1 2 0 220u
+.end"
+"A simple circuit with a 5V DC voltage source, a 330 ohm resistor, and a diode.","* Circuit with a diode
+V1 1 0 DC 5
+R1 1 2 330
+D1 2 0 1N4148
+.end"
+"An RLC circuit with a 5V source, a 1k ohm resistor, a 1mH inductor, and a 10uF capacitor connected in series.","* Series RLC circuit
+V1 1 0 DC 5
+R1 1 2 1k
+L1 2 3 1m
+C1 3 0 10u
+.end"
+"A basic transistor switch circuit with a 9V supply, a 4.7k ohm resistor, and a 2N3904 transistor.","* Transistor switch circuit
+V1 1 0 DC 9
+R1 1 2 4.7k
+Q1 2 3 0 2N3904
+.end"
+This is a simple series circuit with a 5V battery and a 1k ohm resistor.,"* Series circuit with 5V battery and 1k resistor
+V1 1 0 DC 5
+R1 1 2 1k
+.end"
+This circuit consists of a voltage source and a capacitor connected in parallel.,"* Parallel circuit with voltage source and capacitor
+V1 1 0 DC 10
+C1 1 2 10u
+.end"
+This is a basic circuit with a voltage source and an inductor in series.,"* Series circuit with voltage source and inductor
+V1 1 0 DC 12
+L1 1 2 100m
+.end"
+"This circuit includes a voltage source, a resistor, and a diode in series.","* Series circuit with voltage source, resistor, and diode
+V1 1 0 DC 9
+R1 1 2 330
+D1 2 0 D1N4148
+.end"
+"This is a series circuit with a 5V battery, a resistor, and a transistor as a switch.","* Series circuit with voltage source, resistor, and BJT
+V1 1 0 DC 5
+R1 1 2 1k
+Q1 2 3 0 2N3904
+.end"
+"This circuit comprises a current source, a resistor, and a capacitor in parallel.","* Parallel circuit with current source, resistor, and capacitor
+I1 1 0 DC 1
+R1 1 2 10k
+C1 2 0 100n
+.end"
+A simple RC low-pass filter powered by a 5V DC source.,"* Simple RC Low-Pass Filter
+V1 1 0 DC 5
+R1 1 2 1k
+C1 2 0 1u
+.end"
+"A series circuit with a 10V DC voltage source and two resistors, one 1k and one 2k ohms.","* Series Circuit with Two Resistors
+V1 1 0 DC 10
+R1 1 2 1k
+R2 2 0 2k
+.end"
+"A basic LED circuit including a 9V power source, a resistor, and a diode representing the LED.","* Basic LED Circuit
+V1 1 0 DC 9
+R1 1 2 330
+D1 2 0 1N4148
+.end"
+"An inductor connected in series with a battery and a resistor, forming an RL circuit.","* RL Circuit with Inductor
+V1 1 0 DC 12
+R1 1 2 2k
+L1 2 0 10m
+.end"
+"A transistor amplifier circuit with a DC voltage source, resistor, and a BJT transistor.","* BJT Amplifier Circuit
+V1 1 0 DC 5
+R1 1 2 4.7k
+Q1 2 3 0 2N3904
+.end"
+"A basic voltage divider with a 12V DC source and two resistors, 1k and 2k ohms.","* Voltage Divider Circuit
+V1 1 0 DC 12
+R1 1 2 1k
+R2 2 0 2k
+.end"
+A simple resistive voltage divider consisting of two resistors R1 and R2 connected in series with a 10V battery.,"* Simple resistive voltage divider
+V1 1 0 DC 10
+R1 1 2 1k
+R2 2 0 2k
+.end"
+A series RC circuit with a 5V voltage source and a resistor and capacitor in series.,"* Series RC circuit
+V1 1 0 DC 5
+R1 1 2 1k
+C1 2 0 1u
+.end"
+"A basic low-pass RC filter with a 12V voltage source, a resistor R1 and a capacitor C1.","* Low-pass RC filter
+V1 1 0 DC 12
+R1 1 2 4.7k
+C1 2 0 100n
+.end"
+"A simple series RLC circuit with a 15V source and a resistor, inductor, and capacitor.","* Series RLC circuit
+V1 1 0 DC 15
+R1 1 2 1k
+L1 2 3 10m
+C1 3 0 100u
+.end"
+A circuit with a diode connected to a 9V battery and a resistor in series.,"* Diode with resistor
+V1 1 0 DC 9
+R1 1 2 470
+D1 2 0 D1N4148
+.end"
+"A circuit with a BJT transistor acting as a switch, connected to a 6V power source.","* BJT as a switch
+V1 1 0 DC 6
+R1 1 2 1k
+R2 2 0 10k
+Q1 2 3 0 2N3904
+.end"
+"A simple series circuit with a 5V power supply, a 1k resistor, and a 10uF capacitor.","* Simple series circuit with a voltage source, resistor, and capacitor
+V1 1 0 DC 5
+R1 1 2 1k
+C1 2 0 10u
+.end"
+"A parallel circuit consisting of a 12V power supply, a 220 ohm resistor, and a diode.","* Parallel circuit with a voltage source, resistor, and diode
+V1 1 0 DC 12
+R1 1 2 220
+D1 2 0 D1N4148
+.end"
+"A circuit with a 9V battery, a 1k resistor, and a BJT transistor connected in common emitter configuration.","* Common emitter configuration with BJT
+V1 1 0 DC 9
+R1 1 2 1k
+Q1 3 2 0 2N3904
+.end"
+"A circuit containing a 5V power source, a 1k resistor, and a 100nF capacitor.","* Circuit with voltage source, resistor, and capacitor
+V1 1 0 DC 5
+R1 1 2 1k
+C1 2 0 100n
+.end"
+"A simple RC low-pass filter consisting of a 10V supply, a 1k resistor, and a 10uF capacitor.","* Simple RC low-pass filter
+V1 1 0 DC 10
+R1 1 2 1k
+C1 2 0 10u
+.end"
+"A circuit with a 15V source, a 470 ohm resistor, and a diode in series.","* Series circuit with voltage source and diode
+V1 1 0 DC 15
+R1 1 2 470
+D1 2 0 D1N4148
+.end"
+"A simple circuit with a 5V DC voltage source, a resistor of 1k and a diode connected in series.","* Simple circuit with V, R and D
+V1 1 0 DC 5
+R1 1 2 1k
+D1 2 0 D1N4148
+.end"
+"A circuit featuring a 12V DC voltage source, a 100uF capacitor in parallel with a resistor of 10k.","* Circuit with V, C, and R in parallel
+V1 1 0 DC 12
+R1 1 2 10k
+C1 2 0 100u
+.end"
+"A simple RL circuit with a 9V DC voltage source, a 470m resistor, and a 100mH inductor in series.","* Simple RL circuit with V, R, L
+V1 1 0 DC 9
+R1 1 2 470m
+L1 2 0 100m
+.end"
+"A voltage divider circuit using a 10V DC source and two resistors, 1k and 2k connected in series.","* Voltage divider with V and 2Rs
+V1 1 0 DC 10
+R1 1 2 1k
+R2 2 0 2k
+.end"
+"A series circuit containing a 15V DC power source, a 1k resistor, and a 100nF capacitor.","* Series circuit with V, R, C
+V1 1 0 DC 15
+R1 1 2 1k
+C1 2 0 100n
+.end"
+"A simple circuit with a 9V DC voltage source, a 220 ohm resistor, and a npn transistor as a switch.","* Circuit with V, R, and Q as a switch
+V1 1 0 DC 9
+R1 1 2 220
+Q1 2 0 3 2N3904
+.end"
+A simple series circuit with a 5V power source and a 1k resistor connected to ground.,"* Simple series circuit with a resistor
+V1 1 0 DC 5
+R1 1 2 1k
+.end"
+A parallel circuit consisting of a 5V power source and two 1k resistors connected to ground.,"* Parallel circuit with two resistors
+V1 1 0 DC 5
+R1 1 2 1k
+R2 1 3 1k
+.end"
+"A circuit with a 10V battery, a 1k resistor, and a capacitor of 10uF in series with a load resistor.","* Series circuit with a capacitor
+V1 1 0 DC 10
+R1 1 2 1k
+C1 2 0 10u
+R2 2 0 2k
+.end"
+"A circuit with a 12V source, a 1k resistor, and a diode in series. The diode is a 1N4148.","* Series circuit with a diode
+V1 1 0 DC 12
+R1 1 2 1k
+D1 2 0 1N4148
+.end"
+"A basic RC low-pass filter consisting of a 5V source, a resistor of 10k, and a capacitor of 1uF.","* RC low-pass filter
+V1 1 0 DC 5
+R1 1 2 10k
+C1 2 0 1u
+.end"
+"A simple circuit containing a 9V source, a 1k resistor, and a BJT NPN transistor with the model 2N3904.","* Circuit with BJT transistor
+V1 1 0 DC 9
+R1 1 2 1k
+Q1 2 3 0 2N3904
+.end"
+This circuit consists of a voltage source of 5V connected in series with a 1k resistor and a diode (1N4148).,"* Voltage source, resistor and diode circuit
+V1 1 0 DC 5
+R1 1 2 1k
+D1 2 0 1N4148
+.end"
+This circuit features a 12V power supply in series with a 220 ohm resistor and a capacitor of 100uF to ground.,"* 12V supply, resistor, and capacitor circuit
+V2 1 0 DC 12
+R2 1 2 220
+C1 2 0 100u
+.end"
+"A simple series circuit with a 9V battery and a 1k resistor, connected to a 2N3904 transistor configured as a switch.","* 9V battery, resistor and transistor circuit
+V3 1 0 DC 9
+R3 1 2 1k
+Q1 2 3 0 2N3904
+.end"
+"This circuit uses a 5V voltage source connected to a 1k resistor and 10uF capacitor in parallel, leading to ground.","* Voltage source, resistor and capacitor in parallel
+V4 1 0 DC 5
+R4 1 2 1k
+C2 1 0 10u
+.end"
+"A circuit consisting of a 6V battery, a 330 ohm resistor, and an LED represented by a diode (1N4148).","* 6V battery, resistor and LED
+V5 1 0 DC 6
+R5 1 2 330
+D2 2 0 1N4148
+.end"
+"This circuit consists of a 5V voltage source connected to a 1k ohm resistor, creating a series circuit with a 100uF capacitor to ground.","* Series RC Circuit
+V1 1 0 DC 5
+R1 1 2 1k
+C1 2 0 100u
+.end"
+"This circuit is a simple diode rectifier with a 10V source, a 1N4148 diode, and a load resistor of 2k ohm connected to ground.","* Diode Rectifier Circuit
+V1 1 0 DC 10
+D1 1 2 D1N4148
+R1 2 0 2k
+.end"
+"A basic low-pass filter consisting of a 5V voltage source, a 10k ohm resistor, and a 1uF capacitor connected to ground.","* Low Pass Filter Circuit
+V1 1 0 DC 5
+R1 1 2 10k
+C1 2 0 1u
+.end"
+"This is a simple transistor amplifier circuit using a 12V supply, a 2N3904 transistor, a 1k ohm resistor for the collector, and a 220 ohm resistor as a load.","* Transistor Amplifier Circuit
+V1 1 0 DC 12
+R1 1 2 1k
+R2 2 0 220
+Q1 2 3 0 2N3904
+.end"
+"A voltage divider consisting of a 9V battery, a 4.7k ohm resistor, and a 10k ohm resistor, with the output taken across the 10k ohm resistor.","* Voltage Divider Circuit
+V1 1 0 DC 9
+R1 1 2 4.7k
+R2 2 0 10k
+.end"
+"This circuit contains a 3V battery, a 330 ohm resistor and a 10uF capacitor in parallel, connected to ground.","* RC Parallel Circuit
+V1 1 0 DC 3
+R1 1 2 330
+C1 1 0 10u
+.end"
+A simple series circuit consisting of a voltage source and two resistors.,"* A simple series circuit with a voltage source and two resistors
+V1 1 0 DC 10
+R1 1 2 1k
+R2 2 0 2k
+.end"
+An RC charging circuit with a voltage source and a capacitor.,"* An RC charging circuit consisting of a voltage source and a capacitor
+V1 1 0 DC 5
+R1 1 2 1k
+C1 2 0 1u
+.end"
+A basic amplifier using a BJT transistor with a resistive load.,"* A basic amplifier circuit using a BJT transistor
+V1 1 0 DC 12
+R1 1 2 1k
+Q1 2 3 0 2N3904
+R2 3 0 4.7k
+.end"
+"A simple circuit with a voltage source, a resistor, and a diode.","* A circuit with a voltage source, resistor, and diode
+V1 1 0 DC 9
+R1 1 2 330
+D1 2 0 D1N4148
+.end"
+An RLC series circuit with a voltage source and an inductor.,"* An RLC series circuit with a voltage source and an inductor
+V1 1 0 DC 5
+R1 1 2 100
+L1 2 3 10m
+C1 3 0 100u
+.end"
+A basic voltage divider circuit with two resistors.,"* A basic voltage divider circuit with two resistors
+V1 1 0 DC 12
+R1 1 2 2k
+R2 2 0 4k
+.end"
+A simple resistive voltage divider with two resistors and a voltage source.,"* Simple resistive voltage divider
+V1 1 0 DC 10
+R1 1 2 1k
+R2 2 0 2k
+.end"
+An RC low-pass filter composed of a resistor and a capacitor connected to a voltage source.,"* RC low-pass filter
+V1 1 0 DC 5
+R1 1 2 1k
+C1 2 0 10u
+.end"
+"A basic series circuit with a voltage source, a resistor, and a diode.","* Series circuit with resistor and diode
+V1 1 0 DC 9
+R1 1 2 470
+D1 2 0 D1N4148
+.end"
+"An RLC series circuit with a voltage source, a resistor, an inductor, and a capacitor.","* RLC series circuit
+V1 1 0 DC 15
+R1 1 2 1k
+L1 2 3 10m
+C1 3 0 100n
+.end"
+"A transistor amplifier circuit with a voltage source, a resistor, and a BJT.","* BJT amplifier circuit
+V1 1 0 DC 12
+R1 1 2 2k
+Q1 2 3 0 2N3904
+.end"
+"A parallel circuit with a voltage source, two resistors, and a capacitor.","* Parallel circuit with capacitors and resistors
+V1 1 0 DC 5
+R1 1 2 4k
+R2 1 3 2k
+C1 2 0 100u
+.end"
+"A simple series circuit with a 5V DC power supply, a 1k resistor, and a 10uF capacitor.","* A simple series circuit with a 5V DC power supply, a 1k resistor, and a 10uF capacitor.
+V1 1 0 DC 5
+R1 1 2 1k
+C1 2 0 10u
+.end"
+"An RC low-pass filter consisting of a 10V DC source, a 10k resistor, and a 1uF capacitor.","* An RC low-pass filter consisting of a 10V DC source, a 10k resistor, and a 1uF capacitor.
+V1 1 0 DC 10
+R1 1 2 10k
+C1 2 0 1u
+.end"
+A basic diode rectifier with a 12V AC source and a 1N4148 diode.,"* A basic diode rectifier with a 12V AC source and a 1N4148 diode.
+V1 1 0 AC 12
+D1 1 2 D1N4148
+R1 2 0 1k
+.end"
+A voltage divider circuit using a 9V supply and two resistors of 4.7k and 10k ohms.,"* A voltage divider circuit using a 9V supply and two resistors of 4.7k and 10k ohms.
+V1 1 0 DC 9
+R1 1 2 4.7k
+R2 2 0 10k
+.end"
+"A parallel RC circuit with a 5V DC source, a 1k resistor, and a 100nF capacitor.","* A parallel RC circuit with a 5V DC source, a 1k resistor, and a 100nF capacitor.
+V1 1 0 DC 5
+R1 1 2 1k
+C1 2 0 100n
+.end"
+A simple circuit consisting of a 5V battery connected to a 1k ohm resistor in series with a 1uF capacitor.,"* Simple series circuit with a battery, resistor, and capacitor
+V1 1 0 DC 5
+R1 1 2 1k
+C1 2 0 1u
+.end"
+"A basic RC low-pass filter with a 10V power source, a 2k ohm resistor, and a 100nF capacitor.","* RC low-pass filter circuit
+V1 1 0 DC 10
+R1 1 2 2k
+C1 2 0 100n
+.end"
+"A circuit with a 12V voltage source, a diode in series with a 330 ohm resistor.","* Circuit with diode and resistor
+V1 1 0 DC 12
+D1 1 2 D1N4148
+R1 2 0 330
+.end"
+"A simple series BJT circuit with a 9V battery, a 10k ohm resistor, and a transistor acting as a switch.","* BJT switching circuit
+V1 1 0 DC 9
+R1 1 2 10k
+Q1 2 3 0 2N3904
+.end"
+"A basic RL circuit comprising a 6V battery, a 470 ohm resistor, and a 1mH inductor.","* RL circuit with voltage source, resistor and inductor
+V1 1 0 DC 6
+R1 1 2 470
+L1 2 0 1m
+.end"
+"A simple voltage divider circuit with a 10V power supply and two resistors, 1k ohm and 2k ohm.","* Voltage divider circuit
+V1 1 0 DC 10
+R1 1 2 1k
+R2 2 0 2k
+.end"
+This circuit consists of a 5V voltage source connected in series with a 1k ohm resistor and a 10uF capacitor to ground.,"* Series RC circuit with a voltage source
+V1 1 0 DC 5
+R1 1 2 1k
+C1 2 0 10u
+.end"
+This is a simple voltage divider with a 5V source and two resistors of 1k ohm and 2k ohm.,"* Voltage divider with V1
+V1 1 0 DC 5
+R1 1 2 1k
+R2 2 0 2k
+.end"
+A basic RC low-pass filter where a 10V source is connected to a 1k ohm resistor followed by a 100nF capacitor to ground.,"* Low-pass RC filter
+V1 1 0 DC 10
+R1 1 2 1k
+C1 2 0 100n
+.end"
+This circuit features a diode connected to a 12V source with a 100 ohm resistor to limit current and a 220uF capacitor to smooth the output.,"* Circuit with diode, resistor, and capacitor
+V1 1 0 DC 12
+R1 1 2 100
+D1 2 0 D1N4148
+C1 2 0 220u
+.end"
+This is a small circuit with a transistor switch; a 9V battery powers a 2N3904 transistor controlling an LED (injected as a resistor) through a base resistor.,"* Transistor switch circuit
+V1 1 0 DC 9
+R1 1 2 1k
+Q1 2 3 0 2N3904
+R2 3 0 330
+.end"
+A simple series circuit consisting of a 5V voltage source and a 1k resistor connected to ground.,"* Simple series circuit with voltage source and resistor
+V1 1 0 DC 5
+R1 1 2 1k
+.end"
+"A parallel circuit with a 5V voltage source and two 1k resistors, one connected to ground, the other to node 2.","* Parallel circuit with voltage source and two resistors
+V1 1 0 DC 5
+R1 1 2 1k
+R2 1 0 1k
+.end"
+"A circuit with a 10V voltage source, a 1k resistor, and a diode oriented towards ground.","* Circuit with voltage source, resistor, and diode
+V1 1 0 DC 10
+R1 1 2 1k
+D1 2 0 D1N4148
+.end"
+"A simple RC circuit with a 5V voltage source, a resistor, and a capacitor in series.","* Simple RC circuit with voltage source, resistor, and capacitor
+V1 1 0 DC 5
+R1 1 2 1k
+C1 2 0 1u
+.end"
+"A basic BJT circuit consisting of a 12V voltage source, a resistor, and an NPN transistor.","* Basic BJT circuit with voltage source, resistor, and transistor
+V1 1 0 DC 12
+R1 1 2 10k
+Q1 2 3 0 2N3904
+.end"
+A simple RL circuit with a voltage source of 5V powering a resistor and inductor in series.,"* Simple RL circuit with voltage source, resistor, and inductor
+V1 1 0 DC 5
+R1 1 2 1k
+L1 2 0 100m
+.end"
+A simple series circuit consisting of a 5V voltage source and a 1k ohm resistor.,"* A simple series circuit with a voltage source and resistor
+V1 1 0 DC 5
+R1 1 2 1k
+.end"
+A parallel circuit with a 10V voltage source and two resistors of 1k ohm and 2k ohm.,"* A parallel circuit with a voltage source and two resistors
+V1 1 0 DC 10
+R1 1 2 1k
+R2 1 3 2k
+.end"
+"An RC low-pass filter with a 5V voltage source, a 1k ohm resistor, and a 1uF capacitor.","* An RC low-pass filter circuit
+V1 1 0 DC 5
+R1 1 2 1k
+C1 2 0 1u
+.end"
+"A circuit with a 12V voltage source, a 2k ohm resistor, and a diode in series.","* A circuit with a voltage source, resistor, and diode
+V1 1 0 DC 12
+R1 1 2 2k
+D1 2 0 D1N4148
+.end"
+"A circuit including a 9V voltage source, a 1k ohm resistor, and an NPN transistor with the base connected through a 10k ohm resistor.","* A circuit with a voltage source, resistor, and NPN transistor
+V1 1 0 DC 9
+R1 1 2 1k
+R2 2 3 10k
+Q1 4 3 0 2N3904
+.end"
+"An RLC series circuit with a 6V voltage source, a 100 ohm resistor, a 1mH inductor, and a 10uF capacitor.","* An RLC series circuit
+V1 1 0 DC 6
+R1 1 2 100
+L1 2 3 1m
+C1 3 0 10u
+.end"
+A simple series circuit consisting of a 5V voltage source and two resistors of 1k ohm each connected in series.,"* A simple series circuit with a voltage source and two resistors
+V1 1 0 DC 5
+R1 1 2 1k
+R2 2 0 1k
+.end"
+"A parallel circuit with a 10V source and two resistors, one of 2k ohm and the other of 4k ohm.","* A parallel circuit with a voltage source and two resistors
+V1 1 0 DC 10
+R1 1 2 2k
+R2 1 3 4k
+.end"
+"A simple RC low-pass filter consisting of a 9V voltage source, a resistor of 1k ohm, and a capacitor of 10uF.","* A simple RC low-pass filter
+V1 1 0 DC 9
+R1 1 2 1k
+C1 2 0 10u
+.end"
+"An RL circuit with a series connection of a 12V voltage source, a resistor of 1.5k ohm, and an inductor of 100mH.","* An RL circuit with a voltage source and passive components
+V1 1 0 DC 12
+R1 1 2 1.5k
+L1 2 0 100m
+.end"
+"A circuit with a 24V voltage source, a 2.2k ohm resistor, and a diode in forward bias, specifically a 1N4148.","* Circuit with a voltage source, a resistor and a diode
+V1 1 0 DC 24
+R1 1 2 2.2k
+D1 2 0 1N4148
+.end"
+"A transistor switch circuit with a 5V power supply, a resistor of 1k ohm for the base, and a 2N3904 NPN transistor controlling a load of 470 ohm.","* A transistor switch circuit
+V1 1 0 DC 5
+R1 1 2 1k
+Q1 2 3 0 2N3904
+R2 3 0 470
+.end"
+"This circuit consists of a 5V voltage source connected to a 1k resistor and a 10uF capacitor in parallel, with a diode for rectification.","* A simple rectifier circuit
+V1 1 0 DC 5
+R1 1 2 1k
+C1 2 0 10u
+D1 2 0 D1N4148
+.end"
+This circuit features a 5V source connected to a 2k resistor in series with a 100uF capacitor. The output is taken across the capacitor.,"* RC charging circuit
+V1 1 0 DC 5
+R1 1 2 2k
+C1 2 0 100u
+.end"
+"This circuit includes a 9V battery connected to a 1.5k resistor and a 10uF capacitor in series, followed by a transistor as a switch.","* Basic transistor switch circuit
+V1 1 0 DC 9
+R1 1 2 1.5k
+C1 2 0 10u
+Q1 3 2 0 2N3904
+.end"
+"The circuit is composed of a 12V DC source, a 1k resistor, and a 100nF capacitor in parallel with a diode, configured for simple rectification.","* Simple rectifier with capacitor
+V1 1 0 DC 12
+R1 1 2 1k
+C1 2 0 100n
+D1 2 0 D1N4148
+.end"
+"This circuit contains a 5V voltage source, a 1k resistor, and a 220uF capacitor connected in series, with an NPN transistor as a load switch.","* Load switch using transistor
+V1 1 0 DC 5
+R1 1 2 1k
+C1 2 0 220u
+Q1 3 2 0 2N3904
+.end"
+"A simple RC low-pass filter circuit can be found here, with a 10V source, a 1k resistor, and a 1uF capacitor.","* RC low-pass filter
+V1 1 0 DC 10
+R1 1 2 1k
+C1 2 0 1u
+.end"
+A simple resistive divider circuit with a 5V source and two resistors of 1k each.,"* Simple resistive divider circuit
+V1 1 0 DC 5
+R1 1 2 1k
+R2 2 0 1k
+.end"
+"An RC low-pass filter using a 5V source, a resistor of 1k, and a capacitor of 1uF.","* RC low-pass filter
+V1 1 0 DC 5
+R1 1 2 1k
+C1 2 0 1u
+.end"
+"A basic BJT amplifier with a supply voltage of 10V, a 2N3904 transistor, and a 1k collector resistor.","* BJT amplifier circuit
+V1 1 0 DC 10
+R1 1 2 1k
+Q1 2 3 4 2N3904
+.end"
+A voltage source connected in series with a 470 ohm resistor and a diode.,"* Voltage source in series with resistor and diode
+V1 1 0 DC 5
+R1 1 2 470
+D1 2 0 1N4148
+.end"
+"A series RL circuit with a DC power supply of 12V, a 100 ohm resistor, and a 10mH inductor.","* Series RL circuit
+V1 1 0 DC 12
+R1 1 2 100
+L1 2 0 10m
+.end"
+"An RLC circuit consisting of a 5V source, a 220 ohm resistor, a 1uF capacitor, and a 10mH inductor.","* RLC circuit
+V1 1 0 DC 5
+R1 1 2 220
+C1 2 0 1u
+L1 2 0 10m
+.end"
+A simple series circuit consisting of a 5V voltage source and a resistor of 1k ohm.,"* Simple series circuit with a voltage source and a resistor
+V1 1 0 DC 5
+R1 1 2 1k
+.end"
+"An RC low-pass filter with a 10V voltage source, a resistor of 10k ohm, and a capacitor of 100nF.","* RC low-pass filter
+V1 1 0 DC 10
+R1 1 2 10k
+C1 2 0 100n
+.end"
+"A BJT amplifier circuit using a 15V supply, 10k ohm resistor, and a 2N3904 transistor.","* BJT amplifier circuit
+V1 1 0 DC 15
+R1 1 2 10k
+Q1 2 3 0 2N3904
+.end"
+"A voltage divider made of two resistors, R1 = 1k ohm and R2 = 2k ohm, powered by a 12V voltage source.","* Voltage divider circuit
+V1 1 0 DC 12
+R1 1 2 1k
+R2 2 0 2k
+.end"
+"A simple series circuit with a 5V DC source, a 1k ohm resistor, and a diode D1N4148 in series.","* Circuit with a resistor and diode in series
+V1 1 0 DC 5
+R1 1 2 1k
+D1 2 0 D1N4148
+.end"
+"An RLC series circuit with a 10V voltage source, a 1k ohm resistor, a 100uF capacitor, and a 10mH inductor.","* RLC series circuit
+V1 1 0 DC 10
+R1 1 2 1k
+C1 2 3 100u
+L1 3 0 10m
+.end"
+A simple series circuit consisting of a 5V voltage source and a 1k ohm resistor.,"* Simple series circuit with a voltage source and resistor
+V1 1 0 DC 5
+R1 1 2 1k
+.end"
+"A parallel circuit with a voltage source of 12V and two resistors, one of 4k and another of 6k ohms.","* Parallel circuit with a voltage source and two resistors
+V1 1 0 DC 12
+R1 1 2 4k
+R2 1 3 6k
+.end"
+"An RC charging circuit with a 9V source, a 10k ohm resistor, and a 100uF capacitor.","* RC charging circuit
+V1 1 0 DC 9
+R1 1 2 10k
+C1 2 0 100u
+.end"
+"A simple circuit with a 2N3904 NPN transistor used as a switch, powered by a 5V source and a load resistor of 220 ohms.","* NPN transistor switch circuit
+V1 1 0 DC 5
+R1 1 2 220
+Q1 2 3 0 2N3904
+.end"
+"A circuit with a 15V source, a 1k resistor, and a 1N4148 diode in series.","* Series circuit with voltage source, resistor, and diode
+V1 1 0 DC 15
+R1 1 2 1k
+D1 2 0 1N4148
+.end"
+"An RLC series circuit with a 10V source, a 1k ohm resistor, a 1mF capacitor, and a 10mH inductor.","* RLC series circuit
+V1 1 0 DC 10
+R1 1 2 1k
+C1 2 3 1m
+L1 3 0 10m
+.end"
+A simple voltage divider circuit with two resistors.,"* Voltage divider with two resistors
+V1 1 0 DC 10
+R1 1 2 10k
+R2 2 0 20k
+.end"
+A series circuit with a voltage source and a resistor.,"* Series circuit with a voltage source and resistor
+V1 1 0 DC 5
+R1 1 2 1k
+.end"
+An RC low-pass filter with a voltage source.,"* RC low-pass filter
+V1 1 0 DC 5
+R1 1 2 1k
+C1 2 0 10u
+.end"
+A simple series RL circuit driven by a voltage source.,"* Series RL circuit
+V1 1 0 DC 5
+R1 1 2 1k
+L1 2 0 100m
+.end"
+A basic diode rectifier circuit with a load resistor.,"* Simple diode rectifier circuit
+V1 1 0 AC 5
+D1 1 2 D1N4148
+R1 2 0 1k
+.end"
+A basic BJT amplifier using a common-emitter configuration.,"* Common-emitter BJT amplifier
+V1 1 0 DC 12
+R1 1 2 4.7k
+C1 2 0 10u
+Q1 2 3 0 2N3904
+.end"
+This circuit consists of a 5V power supply connected to a resistor and a diode. The diode is oriented to allow current to flow from the power source through the resistor and then through the diode.,"* 5V power supply with a resistor and a diode
+V1 1 0 DC 5
+R1 1 2 1k
+D1 2 0 D1N4148
+.end"
+This circuit contains a current source providing 2mA into a parallel combination of a 2k ohm resistor and a capacitor. The capacitor is connected to ground.,"* 2mA current source with resistor and capacitor in parallel
+I1 1 0 DC 2m
+R1 1 2 2k
+C1 2 0 100u
+.end"
+This circuit has a 10V power source connected to a resistor and a NPN transistor. The transistor's base is connected to ground through a resistor.,"* 10V power supply with a resistor and an NPN transistor
+V1 1 0 DC 10
+R1 1 2 1k
+Q1 3 2 0 2N3904
+.end"
+This simple RC circuit includes a 1V power supply connected to a resistor and a capacitor in series.,"* 1V power supply with a resistor and capacitor in series
+V1 1 0 DC 1
+R1 1 2 1k
+C1 2 0 10u
+.end"
+This circuit features a 5V power source connected to an inductor and a resistor in series with a diode for rectification.,"* 5V power supply with a resistor, inductor, and diode
+V1 1 0 DC 5
+R1 1 2 220
+L1 2 3 1m
+D1 3 0 D1N4148
+.end"
+A simple voltage divider using two resistors. The voltage source is 5V and the resistors are 1k ohm each.,"* Voltage divider circuit
+V1 1 0 DC 5
+R1 1 2 1k
+R2 2 0 1k
+.end"
+"A basic RC low-pass filter. The circuit has a 10V voltage source, a resistor of 1k ohm, and a capacitor of 1uF.","* RC low-pass filter
+V1 1 0 DC 10
+R1 1 2 1k
+C1 2 0 1u
+.end"
+"A simple series circuit with a voltage source and a resistor. The voltage source is 12V, and the resistor is 470 ohm.","* Series circuit with a resistor
+V1 1 0 DC 12
+R1 1 2 470
+.end"
+"An RC high-pass filter with a 5V source. The resistor is 10k ohm, and the capacitor is 10nF.","* RC high-pass filter
+V1 1 0 DC 5
+R1 1 2 10k
+C1 2 0 10n
+.end"
+"A simple circuit with a diode and a resistor. The diode is a 1N4148, and the resistor is 1k ohm connected to a 9V source.","* Circuit with a diode and resistor
+V1 1 0 DC 9
+R1 1 2 1k
+D1 2 0 1N4148
+.end"
+"A basic circuit with an NPN transistor and a resistor. The voltage source is 5V, the resistor is 1k ohm, and a 2N3904 transistor is used.","* Circuit with NPN transistor
+V1 1 0 DC 5
+R1 1 2 1k
+Q1 2 3 0 2N3904
+.end"
+A simple circuit with a DC voltage source of 5 volts connected to a resistor of 1k ohm in series with a capacitor of 10uF to ground.,"* A simple RC circuit
+V1 1 0 DC 5
+R1 1 2 1k
+C1 2 0 10u
+.end"
+"A circuit with a 12V DC power supply connected to a series combination of a 470 ohm resistor and a 100uF capacitor, with the other end of the capacitor grounded.","* RC Circuit with DC source
+V2 1 0 DC 12
+R2 1 2 470
+C2 2 0 100u
+.end"
+"A basic common-emitter amplifier configuration using a 12V power supply, a 2N3904 transistor, and a load resistor of 2k ohm connected to a collector.","* Common-emitter amplifier
+V3 1 0 DC 12
+R3 1 2 2k
+Q1 2 3 0 2N3904
+.end"
+A circuit comprising a 9V battery connected to a 1k ohm resistor in series with a diode (1N4148) and a 100uF capacitor to ground.,"* Diode and RC circuit
+V4 1 0 DC 9
+R4 1 2 1k
+D1 2 3 1N4148
+C3 3 0 100u
+.end"
+"A simple RC low-pass filter circuit with a 5V DC source, a 1k ohm resistor, and a 10uF capacitor connected to ground.","* Simple RC low-pass filter
+V5 1 0 DC 5
+R5 1 2 1k
+C4 2 0 10u
+.end"
+A simple circuit with a voltage source of 5V powering a resistor of 1k and a capacitor of 1uF in parallel.,"* A simple circuit with a voltage source of 5V powering a resistor of 1k and a capacitor of 1uF in parallel.
+V1 1 0 DC 5
+R1 1 2 1k
+C1 1 0 1u
+.end"
+"A circuit containing a 10V voltage source, a 100 ohm resistor in series with a diode (1N4148).","* A circuit containing a 10V voltage source, a 100 ohm resistor in series with a diode (1N4148).
+V1 1 0 DC 10
+R1 1 2 100
+D1 2 0 D1N4148
+.model D1N4148 D(IS=2.52E-9)
+.end"
+"A series circuit with a voltage source of 12V, a resistor of 330 ohms, and an inductor of 10mH.","* A series circuit with a voltage source of 12V, a resistor of 330 ohms, and an inductor of 10mH.
+V1 1 0 DC 12
+R1 1 2 330
+L1 2 0 10m
+.end"
+"A circuit featuring a 5V voltage source, a capacitor of 10uF, and a BJT (2N3904) configured as a switch.","* A circuit featuring a 5V voltage source, a capacitor of 10uF, and a BJT (2N3904) configured as a switch.
+V1 1 0 DC 5
+C1 1 2 10u
+Q1 2 3 0 2N3904
+.model 2N3904 NPN(IS=1E-14 BF=100)
+.end"
+"An RC low-pass filter with a 15V source, a 1k ohm resistor, and a 100nF capacitor.","* An RC low-pass filter with a 15V source, a 1k ohm resistor, and a 100nF capacitor.
+V1 1 0 DC 15
+R1 1 2 1k
+C1 2 0 100n
+.end"
+A basic LED circuit powered by a 9V source with a current-limiting resistor of 470 ohms and a diode (1N4148).,"* A basic LED circuit powered by a 9V source with a current-limiting resistor of 470 ohms and a diode (1N4148).
+V1 1 0 DC 9
+R1 1 2 470
+D1 2 0 D1N4148
+.model D1N4148 D(IS=2.52E-9)
+.end"
+A simple series circuit with a 5V voltage source and two resistors of 1k ohm each.,"* Simple series circuit with a voltage source and two resistors
+V1 1 0 DC 5
+R1 1 2 1k
+R2 2 0 1k
+.end"
+"A circuit with a 10V voltage source, a 10k ohm resistor, and a 1uF capacitor connected to ground.","* Circuit with a voltage source, resistor, and capacitor
+V1 1 0 DC 10
+R1 1 2 10k
+C1 2 0 1u
+.end"
+"A parallel circuit with a 9V voltage source and two resistors, one 2k ohm and the other 3k ohm.","* Parallel resistors connected to a voltage source
+V1 1 0 DC 9
+R1 1 2 2k
+R2 1 3 3k
+.end"
+"A circuit consisting of a 12V voltage source, a 100 ohm resistor, and a 220uF capacitor in series.","* Series circuit with voltage source, resistor, and capacitor
+V1 1 0 DC 12
+R1 1 2 100
+C1 2 0 220u
+.end"
+"A circuit with a current source providing 5mA, a 1k ohm resistor, and a diode connected to ground.","* Circuit with current source, resistor, and diode
+I1 1 0 DC 5m
+R1 1 2 1k
+D1 2 0 D1N4148
+.model D1N4148 D(IS=2.52E-9)
+.end"
+"A simple series circuit with a 5V battery, a 1k ohm resistor, and a 10uF capacitor.","* Simple series circuit with battery, resistor, and capacitor
+V1 1 0 DC 5
+R1 1 2 1k
+C1 2 0 10u
+.end"
+"A parallel circuit containing a 3V battery, a 2k ohm resistor and a 4.7uF capacitor.","* Parallel circuit with battery, resistor, and capacitor
+V1 1 0 DC 3
+R1 1 2 2k
+C1 2 0 4.7u
+.end"
+"An RC low-pass filter with a 5V supply, a 1k ohm resistor, and a 100nF capacitor.","* RC low-pass filter circuit
+V1 1 0 DC 5
+R1 1 2 1k
+C1 2 0 100n
+.end"
+"A basic inverter using a 5V power supply, a 10k ohm resistor, and a NPN transistor.","* Basic inverter circuit with NPN transistor
+V1 1 0 DC 5
+R1 1 2 10k
+Q1 3 2 0 2N3904
+.end"
+A circuit with a diode in series with a 9V battery and a 1k ohm resistor.,"* Series circuit with diode, battery, and resistor
+V1 1 0 DC 9
+D1 1 2 D1N4148
+R1 2 0 1k
+.end"
+"An RL circuit consisting of a 12V battery, a 220 ohm resistor, and a 10mH inductor.","* RL circuit with battery, resistor, and inductor
+V1 1 0 DC 12
+R1 1 2 220
+L1 2 0 10m
+.end"
+A simple resistive voltage divider using two resistors connected in series across a 10V source.,"* Simple voltage divider
+V1 1 0 DC 10
+R1 1 2 10k
+R2 2 0 20k
+.end"
+An RC low-pass filter consisting of a resistor and a capacitor connected in series with a 5V power supply.,"* RC low-pass filter
+V1 1 0 DC 5
+R1 1 2 1k
+C1 2 0 1u
+.end"
+"A circuit containing a voltage source, a resistor, and a diode in series. The diode is a standard 1N4148.","* Voltage source, resistor, and diode in series
+V1 1 0 DC 12
+R1 1 2 4.7k
+D1 2 0 1N4148
+.end"
+"A simple circuit with a transistor (2N3904) configured as a switch, using a resistor to limit current from a 9V source.","* Transistor switch configuration
+V1 1 0 DC 9
+R1 1 2 1k
+Q1 2 3 0 2N3904
+.end"
+"A basic inductor and capacitor in parallel, connected across a 5V power supply to form a resonant circuit.","* LC parallel circuit
+V1 1 0 DC 5
+L1 1 2 10m
+C1 2 0 100n
+.end"
+"A simple circuit with a 5V voltage source connected to a 1k ohm resistor, which is connected in series with a 10uF capacitor to ground.","* Simple circuit with voltage source, resistor, and capacitor
+V1 1 0 DC 5
+R1 1 2 1k
+C1 2 0 10u
+.end"
+A circuit consisting of a 12V power supply connected to a 470 ohm resistor and a diode in series. The diode is a 1N4148.,"* Circuit with voltage source, resistor, and diode
+V1 1 0 DC 12
+R1 1 2 470
+D1 2 0 1N4148
+.end"
+A basic circuit with a 9V power source connected to a 10k ohm resistor in series with a 100nF capacitor to ground.,"* Basic circuit with a voltage source, resistor, and capacitor
+V1 1 0 DC 9
+R1 1 2 10k
+C1 2 0 100n
+.end"
+"A circuit with a 5V voltage source powering a 1k ohm resistor and a BJT transistor, NPN 2N3904, in common emitter configuration.","* Circuit with voltage source, resistor, and NPN transistor
+V1 1 0 DC 5
+R1 1 2 1k
+Q1 2 3 0 2N3904
+.end"
+"A configuration with a 6V battery connected to a 220 ohm resistor in series with a 1uF capacitor to ground, forming a simple RC circuit.","* RC circuit with voltage source, resistor, and capacitor
+V1 1 0 DC 6
+R1 1 2 220
+C1 2 0 1u
+.end"
+"A series circuit with a 10V voltage source feeding a 1k ohm resistor followed by a 100uF capacitor to ground, forming a basic filtering application.","* Series circuit with a voltage source, resistor, and capacitor
+V1 1 0 DC 10
+R1 1 2 1k
+C1 2 0 100u
+.end"
+A simple series resistor circuit powered by a 5V voltage source.,"* Simple series resistor circuit
+V1 1 0 DC 5
+R1 1 2 1k
+.end"
+"A parallel combination of a 2k ohm resistor and a capacitor of 10 microfarads, powered by a 5V source.","* Parallel resistor and capacitor circuit
+V1 1 0 DC 5
+R1 1 2 2k
+C1 2 0 10u
+.end"
+"A low-pass RC filter with a 100k ohm resistor and a 1 microfarad capacitor, driven by a 5V supply.","* Low-pass RC filter
+V1 1 0 DC 5
+R1 1 2 100k
+C1 2 0 1u
+.end"
+A circuit with a 1k ohm resistor in series with a diode and a 5V voltage source.,"* Series resistor and diode circuit
+V1 1 0 DC 5
+R1 1 2 1k
+D1 2 0 D1N4148
+.end"
+"A basic transistor amplifier with a 5V DC supply, including a base resistor of 10k ohms and a load resistor of 1k ohm.","* Basic transistor amplifier
+V1 1 0 DC 5
+R1 1 2 10k
+R2 3 0 1k
+Q1 3 2 0 2N3904
+.end"
+A simple circuit with a 5V battery connected to a resistor of 1k and a diode in series.,"* Simple circuit with battery, resistor, and diode
+V1 1 0 DC 5
+R1 1 2 1k
+D1 2 0 D1N4148
+.end"
+"A circuit with a 10V DC supply, a 100uF capacitor in parallel with a 1k resistor.","* Circuit with capacitor and resistor in parallel
+V1 1 0 DC 10
+R1 1 2 1k
+C1 2 0 100u
+.end"
+This circuit includes a 12V voltage source connected to a 2k resistor and an NPN transistor acting as a switch.,"* Circuit with a voltage source, resistor, and transistor
+V1 1 0 DC 12
+R1 1 2 2k
+Q1 3 2 0 2N3904
+.end"
+"A series circuit containing a 15V DC source, a 470 ohm resistor, and a 10uF capacitor.","* Series circuit with resistor and capacitor
+V1 1 0 DC 15
+R1 1 2 470
+C1 2 0 10u
+.end"
+"An oscillator circuit featuring a 5V battery, a 1k ohm resistor, a 100nF capacitor, and a diode.","* Oscillator circuit with resistor, capacitor, and diode
+V1 1 0 DC 5
+R1 1 2 1k
+C1 2 0 100n
+D1 2 0 D1N4148
+.end"
+A simple resistive divider circuit with two resistors connected in series across a 5V power supply.,"* Resistive Divider Circuit
+V1 1 0 DC 5
+R1 1 2 10k
+R2 2 0 20k
+.end"
+An RC low-pass filter consisting of a resistor and capacitor in series connected to a 5V supply.,"* RC Low-Pass Filter
+V1 1 0 DC 5
+R1 1 2 1k
+C1 2 0 1u
+.end"
+A simple series circuit with a voltage source and a diode.,"* Series Circuit with Diode
+V1 1 0 DC 5
+D1 1 2 D1N4148
+R1 2 0 1k
+.end"
+An RL circuit with a resistor and an inductor connected to a 5V power supply.,"* RL Circuit
+V1 1 0 DC 5
+R1 1 2 1k
+L1 2 0 10m
+.end"
+"A basic BJT transistor amplifier circuit with a voltage source, resistor, and a BJT transistor.","* BJT Amplifier Circuit
+V1 1 0 DC 5
+R1 1 2 4.7k
+Q1 2 3 0 2N3904
+R2 3 0 10k
+.end"
