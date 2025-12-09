@@ -859,12 +859,7 @@ R1 1 2 4.7k
 Q1 2 3 0 2N3904
 R2 3 0 1k
 .end"
-An op-amp circuit configured as a non-inverting amplifier with a resistor in the feedback loop.,"* Non-inverting amplifier circuit
-V1 1 0 DC 5
-R1 1 2 10k
-R2 2 0 1k
-X1 0 1 2 OPAMP
-.end"
+
 A simple series circuit consisting of a 5V voltage source and a 1k ohm resistor.,"* A simple series circuit with a voltage source and resistor
 V1 1 0 DC 5
 R1 1 2 1k

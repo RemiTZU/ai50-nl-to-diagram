@@ -136,7 +136,7 @@ def validate_by_ngspice(net):
 # ===========================================================
 #  Pipeline: semantic validation + ngspice validation.
 # ===========================================================
-df = pd.read_csv(r"ai50-nl-to-diagram\results.csv", header=None, engine='python')
+df = pd.read_csv(r".\results.csv", header=None, engine='python')
 
 for i in range(len(df)):
     net = df.iloc[i, 1]

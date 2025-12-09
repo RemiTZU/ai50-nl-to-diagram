@@ -1,24 +1,23 @@
 import torch
 from transformers import T5Tokenizer, T5ForConditionalGeneration
-import os
-# 1. Chemin vers ton checkpoint spécifique (vu dans ton image)
-# Assure-toi que le chemin est correct par rapport à où tu lances le script
-# --- MODIFICATION ICI ---
-# On récupère le chemin absolu du dossier où se trouve ce script (test.py)
-script_dir = os.path.dirname(os.path.abspath(__file__))
 
-# On construit le chemin vers le checkpoint en partant du dossier du script
-checkpoint_path = os.path.join(script_dir, "spice_model", "checkpoint-1309")
-# ------------------------
+# ==============================================================================
+# CONFIGURATION DU MODÈLE
+# ==============================================================================
 
-print(f"Chargement du modèle depuis {checkpoint_path}...")
+# Au lieu d'un chemin local (C:\...), on met l'identifiant Hugging Face
+model_id = "Remiwe/nl_to_spice"
+
+print(f"Téléchargement/Chargement du modèle '{model_id}' depuis Hugging Face...")
 
 # 2. Charger le Tokenizer et le Modèle
 try:
-    tokenizer = T5Tokenizer.from_pretrained(checkpoint_path)
-    model = T5ForConditionalGeneration.from_pretrained(checkpoint_path)
-except OSError:
-    print("Erreur: Le chemin est introuvable. Vérifie que le dossier './spice_model/checkpoint-1309' existe bien.")
+    # Cela va chercher le modèle sur le cloud automatiquement
+    tokenizer = T5Tokenizer.from_pretrained(model_id)
+    model = T5ForConditionalGeneration.from_pretrained(model_id)
+except Exception as e:
+    print(f"Erreur lors du chargement : {e}")
+    print("Vérifiez votre connexion internet ou que le nom du modèle est correct.")
     exit()
 
 # Passer le modèle sur GPU s'il est disponible pour aller plus vite
@@ -26,6 +25,10 @@ device = "cuda" if torch.cuda.is_available() else "cpu"
 model = model.to(device)
 
 print("Modèle chargé avec succès !\n")
+
+# ==============================================================================
+# FONCTION DE GÉNÉRATION
+# ==============================================================================
 
 def generate_spice(text_description):
     """
@@ -41,8 +44,6 @@ def generate_spice(text_description):
     ).to(device)
 
     # Génération
-    # num_beams=5 permet une recherche plus qualitative (Beam Search)
-    # max_length=200 car les netlists peuvent être longues
     outputs = model.generate(
         inputs.input_ids,
         max_length=200,
@@ -54,21 +55,23 @@ def generate_spice(text_description):
     result = tokenizer.decode(outputs[0], skip_special_tokens=True)
     return result
 
-# --- ZONE DE TEST ---
+# ==============================================================================
+# ZONE DE TEST
+# ==============================================================================
 
-# Exemple 1 : Un circuit simple (proche de ton dataset)
+# Exemple 1 : Un circuit simple
 prompt1 = "A circuit with a 9V battery connected to a 1k resistor and a LED."
 print(f"Input: {prompt1}")
 print(f"Output SPICE:\n{generate_spice(prompt1)}")
 print("-" * 30)
 
-# Exemple 2 : Un circuit RLC série (Test de généralisation)
+# Exemple 2 : Un circuit RLC série
 prompt2 = "Series RLC circuit with 12V source, 100 ohm resistor, 1mH inductor and 10uF capacitor."
 print(f"Input: {prompt2}")
 print(f"Output SPICE:\n{generate_spice(prompt2)}")
 print("-" * 30)
 
-# Mode interactif pour tester toi-même
+# Mode interactif
 while True:
     user_input = input("\nEntrez une description de circuit (ou 'q' pour quitter) : ")
     if user_input.lower() == 'q':
