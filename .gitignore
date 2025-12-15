@@ -1,0 +1,42 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# VSCode
+.vscode/
+
+# Data and logs
+*.log
+*.csv
+*.tsv
+*.dat
+*.db
+*.sqlite
+*.h5
+*.pth
+*.ckpt
+*.pt
+*.onnx
+
+# WandB
+wandb/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Others
+*.egg-info/
+dist/
+build/

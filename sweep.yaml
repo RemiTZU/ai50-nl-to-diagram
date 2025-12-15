@@ -1,0 +1,16 @@
+program: trainV2.py
+method: bayes  # 'bayes' est intelligent : il apprend des essais précédents pour trouver les meilleurs params
+metric:
+  name: eval_loss
+  goal: minimize  # On veut que l'erreur diminue
+parameters:
+  learning_rate:
+    distribution: log_uniform_values
+    min: 1e-5
+    max: 1e-3
+  num_train_epochs:
+    value: 10  # On fixe à 10 pour tous les essais
+  per_device_train_batch_size:
+    values: [2, 4, 8] # Essayer différentes tailles de batch
+  weight_decay:
+    values: [0.0, 0.01, 0.1]
