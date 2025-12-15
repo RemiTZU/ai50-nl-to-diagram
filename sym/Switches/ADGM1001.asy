@@ -1,0 +1,69 @@
+Version 4
+SymbolType CELL
+LINE Normal -19 -48 -96 -48
+LINE Normal 96 -48 19 -48
+LINE Normal 0 -17 0 16 2
+LINE Normal 15 -57 -13 -48
+LINE Normal -48 32 -48 0
+LINE Normal -16 16 -48 0
+LINE Normal -48 32 -16 16
+LINE Normal -48 16 -96 16 2
+LINE Normal 0 16 -16 16 2
+LINE Normal -48 -37 -48 -40
+LINE Normal -41 -33 -48 -37
+LINE Normal -54 -28 -41 -33
+LINE Normal -41 -24 -54 -28
+LINE Normal -54 -20 -41 -24
+LINE Normal -48 -17 -54 -20
+LINE Normal -48 -13 -48 -17
+LINE Normal -42 -13 -54 -13
+LINE Normal -48 -6 -54 -13
+LINE Normal -42 -13 -48 -6
+LINE Normal 48 -37 48 -40
+LINE Normal 55 -33 48 -37
+LINE Normal 42 -28 55 -33
+LINE Normal 55 -24 42 -28
+LINE Normal 42 -20 55 -24
+LINE Normal 48 -17 42 -20
+LINE Normal 48 -13 48 -17
+LINE Normal 54 -13 42 -13
+LINE Normal 48 -6 42 -13
+LINE Normal 54 -13 48 -6
+LINE Normal 48 -48 48 -40
+LINE Normal -48 -40 -48 -48
+RECTANGLE Normal -96 -128 96 128
+CIRCLE Normal -13 -45 -19 -51
+CIRCLE Normal 19 -45 13 -51
+CIRCLE Normal 32 -17 -32 -80 2
+CIRCLE Normal -46 -46 -50 -50
+CIRCLE Normal -47 -47 -49 -49
+CIRCLE Normal 50 -46 46 -50
+CIRCLE Normal 49 -47 47 -49
+TEXT 2 61 Center 2 ADI
+TEXT -73 -48 Bottom 1 RF1
+TEXT 73 -48 Bottom 1 RFC
+TEXT -73 16 Bottom 1 IN
+TEXT -18 -116 Left 1 VDD
+TEXT -18 113 Left 1 GND
+WINDOW 0 64 -128 Bottom 2
+WINDOW 3 3 91 Center 2
+SYMATTR Value ADGM1001
+SYMATTR Prefix X
+SYMATTR SpiceModel ADGM1001.sub
+SYMATTR Value2 ADGM1001
+SYMATTR Description 0 Hz/DC to 34 GHz, SPDT MEMS Switches (Switch shown for a logic 0 input)
+PIN 0 -128 NONE 8
+PINATTR PinName VDD
+PINATTR SpiceOrder 1
+PIN -96 16 NONE 8
+PINATTR PinName IN
+PINATTR SpiceOrder 2
+PIN -96 -48 NONE 8
+PINATTR PinName RF1
+PINATTR SpiceOrder 3
+PIN 96 -48 NONE 8
+PINATTR PinName RFC
+PINATTR SpiceOrder 4
+PIN 0 128 NONE 8
+PINATTR PinName GND
+PINATTR SpiceOrder 5

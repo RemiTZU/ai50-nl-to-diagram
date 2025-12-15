@@ -1,0 +1,34 @@
+Version 4
+SymbolType CELL
+RECTANGLE Normal -144 -225 128 144
+TEXT -8 -47 Center 2 ADI
+WINDOW 3 0 0 Center 2
+SYMATTR Value LT1466L
+SYMATTR Prefix X
+SYMATTR SpiceModel LT1466L.sub
+SYMATTR Value2 LT1466L
+SYMATTR Description Dual µPower, Precision Rail-to-Rail Input and Output Operational Amplifier
+PIN -144 0 LEFT 8
+PINATTR PinName +INA
+PINATTR SpiceOrder 1
+PIN -144 -96 LEFT 8
+PINATTR PinName -INA
+PINATTR SpiceOrder 2
+PIN -144 -192 LEFT 8
+PINATTR PinName OUTA
+PINATTR SpiceOrder 3
+PIN 128 -192 RIGHT 8
+PINATTR PinName V+
+PINATTR SpiceOrder 4
+PIN -144 96 LEFT 8
+PINATTR PinName V-
+PINATTR SpiceOrder 5
+PIN 128 96 RIGHT 8
+PINATTR PinName +INB
+PINATTR SpiceOrder 6
+PIN 128 0 RIGHT 8
+PINATTR PinName -INB
+PINATTR SpiceOrder 7
+PIN 128 -96 RIGHT 8
+PINATTR PinName OUTB
+PINATTR SpiceOrder 8

@@ -1,0 +1,47 @@
+Version 4
+SymbolType CELL
+LINE Normal 32 -48 112 -48
+LINE Normal -112 -16 -26 -16
+LINE Normal -60 48 -112 48
+LINE Normal -60 64 -60 32
+LINE Normal -28 48 -60 32
+LINE Normal -60 64 -28 48
+LINE Normal -26 -80 -112 -80
+LINE Normal 0 48 -28 48 2
+LINE Normal 0 0 0 48 2
+LINE Normal 23 -48 -21 -21
+RECTANGLE Normal -112 -144 112 176
+CIRCLE Normal 22 -43 32 -53
+CIRCLE Normal -56 0 40 -96 2
+CIRCLE Normal -26 -11 -16 -21
+CIRCLE Normal -26 -75 -16 -85
+TEXT 0 96 Center 2 ADI
+TEXT -88 -80 Bottom 2 NO
+TEXT -89 -16 Bottom 2 NC
+TEXT 76 -48 Bottom 2 COM
+TEXT -90 48 Bottom 2 IN
+WINDOW 0 64 -144 Bottom 2
+WINDOW 3 0 128 Center 2
+SYMATTR Value MAX4544
+SYMATTR Prefix X
+SYMATTR SpiceModel MAX4544.sub
+SYMATTR Value2 MAX4544
+SYMATTR Description Low-Voltage, Single-Supply\nDual SPST/SPDT Analog Switches
+PIN 0 -144 TOP 8
+PINATTR PinName V+
+PINATTR SpiceOrder 1
+PIN -112 48 NONE 8
+PINATTR PinName IN
+PINATTR SpiceOrder 2
+PIN 112 -48 NONE 8
+PINATTR PinName COM
+PINATTR SpiceOrder 3
+PIN -112 -80 NONE 8
+PINATTR PinName NO
+PINATTR SpiceOrder 4
+PIN -112 -16 NONE 8
+PINATTR PinName NC
+PINATTR SpiceOrder 5
+PIN 0 176 BOTTOM 4
+PINATTR PinName GND
+PINATTR SpiceOrder 6
