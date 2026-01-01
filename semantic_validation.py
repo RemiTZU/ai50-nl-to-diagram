@@ -63,8 +63,6 @@ def semantic_validate(net):
         # 3. Check whether the nodes are digits or 0.
         # ------------------------------
         node1, node2 = parts[1], parts[2]
-        # if not node1.isdigit() or not node2.isdigit():
-        #     return False, f"Node names must be numbers: {line}"
         if not is_valid_node(node1) or not is_valid_node(node2):
             return False, f"Invalid node name: {line}"
 
