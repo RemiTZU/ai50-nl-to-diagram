@@ -6,6 +6,17 @@ import re
 NGSPICE_PATH = r"C:\Program Files\ngspice-45.2_64\Spice64\bin\ngspice_con.exe"
 
 
+def is_valid_node(node):
+    # Ground
+    if node == "0":
+        return True
+    # Numeric node
+    if node.isdigit():
+        return True
+    # Symbolic node: in, out, n1, vdd, gate, etc.
+    return re.match(r"^[A-Za-z_][A-Za-z0-9_]*$", node) is not None
+
+
 # ===========================================================
 #  Semantic Validation (does not rely on ngspice; faster and smarter)
 # ===========================================================
@@ -52,8 +63,10 @@ def semantic_validate(net):
         # 3. Check whether the nodes are digits or 0.
         # ------------------------------
         node1, node2 = parts[1], parts[2]
-        if not node1.isdigit() or not node2.isdigit():
-            return False, f"Node names must be numbers: {line}"
+        # if not node1.isdigit() or not node2.isdigit():
+        #     return False, f"Node names must be numbers: {line}"
+        if not is_valid_node(node1) or not is_valid_node(node2):
+            return False, f"Invalid node name: {line}"
 
         # ground
         if node1 == "0" or node2 == "0":
@@ -136,7 +149,7 @@ def validate_by_ngspice(net):
 # ===========================================================
 #  Pipeline: semantic validation + ngspice validation.
 # ===========================================================
-df = pd.read_csv(r".\results.csv", header=None, engine='python')
+df = pd.read_csv(r"C:\Users\TAN\AI50_V2\results_augmented.csv", header=None, engine='python')
 
 for i in range(len(df)):
     net = df.iloc[i, 1]
