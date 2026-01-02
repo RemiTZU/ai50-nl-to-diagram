@@ -1,0 +1,475 @@
+/* ==========================================================================
+   CircuitForge - Styles
+   ========================================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+:root {
+  --bg: #0a0a0a;
+  --card: #141414;
+  --card-hover: #1a1a1a;
+  --border: #262626;
+  --text: #fafafa;
+  --text-secondary: #a3a3a3;
+  --text-muted: #737373;
+  --accent: #facc15;
+  --accent-hover: #eab308;
+  --accent-light: rgba(250, 204, 21, 0.15);
+  --success: #22c55e;
+  --error: #ef4444;
+  --radius: 10px;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+* {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.stApp {
+  background: var(--bg);
+}
+
+#MainMenu,
+footer,
+header {
+  visibility: hidden;
+}
+
+.block-container {
+  padding: 1.5rem 2rem !important;
+  max-width: 1200px !important;
+}
+
+/* ==========================================================================
+   Header
+   ========================================================================== */
+
+.header-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.app-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.app-logo {
+  width: 40px;
+  height: 40px;
+  background: var(--accent);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.app-logo svg {
+  width: 24px;
+  height: 24px;
+}
+
+.app-name {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.02em;
+}
+
+/* ==========================================================================
+   Tabs (Toggle Style)
+   ========================================================================== */
+
+.stTabs [data-baseweb="tab-list"] {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 5px;
+  width: fit-content;
+  margin: 0 auto 2rem auto;
+}
+
+.stTabs [data-baseweb="tab"] {
+  background: transparent !important;
+  border-radius: 8px !important;
+  padding: 0.5rem 1.5rem !important;
+  font-weight: 500 !important;
+  font-size: 0.9rem !important;
+  color: var(--text-muted) !important;
+  border: none !important;
+  height: auto !important;
+}
+
+.stTabs [data-baseweb="tab"]:hover {
+  color: var(--text-secondary) !important;
+}
+
+.stTabs [aria-selected="true"] {
+  background: var(--accent) !important;
+  color: var(--bg) !important;
+  font-weight: 600 !important;
+}
+
+.stTabs [data-baseweb="tab-border"],
+.stTabs [data-baseweb="tab-highlight"] {
+  display: none !important;
+}
+
+/* ==========================================================================
+   Form Elements
+   ========================================================================== */
+
+.label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.stTextArea textarea {
+  background: var(--card) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius) !important;
+  color: var(--text) !important;
+  font-size: 1rem !important;
+  padding: 1rem 1.25rem !important;
+  line-height: 1.6 !important;
+  min-height: 120px !important;
+}
+
+.stTextArea textarea:focus {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 2px var(--accent-light) !important;
+}
+
+.stTextArea textarea::placeholder {
+  color: var(--text-muted) !important;
+}
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+
+.stButton > button {
+  background: var(--accent) !important;
+  color: var(--bg) !important;
+  border: none !important;
+  border-radius: var(--radius) !important;
+  font-weight: 600 !important;
+  font-size: 0.8rem !important;
+  padding: 0.5rem 1rem !important;
+}
+
+.stButton > button:hover {
+  background: var(--accent-hover) !important;
+}
+
+.btn-secondary button {
+  background: var(--card) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text-secondary) !important;
+}
+
+.btn-secondary button:hover {
+  background: var(--card-hover) !important;
+  color: var(--text) !important;
+}
+
+.btn-small button {
+  padding: 0.35rem 0.7rem !important;
+  font-size: 0.75rem !important;
+  border-radius: 6px !important;
+}
+
+.btn-action button {
+  background: var(--card) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text-secondary) !important;
+  padding: 0.5rem 1rem !important;
+  font-size: 0.8rem !important;
+  border-radius: 8px !important;
+  white-space: nowrap !important;
+}
+
+.btn-action button:hover {
+  background: var(--accent) !important;
+  border-color: var(--accent) !important;
+  color: var(--bg) !important;
+}
+
+/* Download button specific */
+[data-testid="stDownloadButton"] button {
+  background: var(--card) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text-secondary) !important;
+  padding: 0.5rem 1rem !important;
+  font-size: 0.8rem !important;
+  border-radius: 8px !important;
+}
+
+[data-testid="stDownloadButton"] button:hover {
+  background: var(--accent) !important;
+  border-color: var(--accent) !important;
+  color: var(--bg) !important;
+}
+
+/* ==========================================================================
+   Layout Fixes
+   ========================================================================== */
+
+[data-testid="column"] {
+  display: flex;
+  align-items: center;
+}
+
+/* ==========================================================================
+   Result Box
+   ========================================================================== */
+
+.result-box {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.result-header {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.95rem;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.result-body {
+  min-height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  padding: 1.5rem;
+}
+
+/* ==========================================================================
+   Empty State
+   ========================================================================== */
+
+.empty-box {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+.empty-icon {
+  width: 48px;
+  height: 48px;
+  background: var(--accent-light);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 0.75rem;
+}
+
+.empty-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.empty-title {
+  font-weight: 500;
+  color: var(--text);
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+}
+
+.empty-desc {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   History
+   ========================================================================== */
+
+/* Stats Header */
+[data-testid="stHorizontalBlock"]:has(.stats-row) {
+  align-items: center !important;
+}
+
+[data-testid="stHorizontalBlock"]:has(.stats-row) [data-testid="column"] {
+  display: flex !important;
+  align-items: center !important;
+}
+
+.stats-row {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.stat-item {
+  display: flex;
+  align-items: baseline;
+  gap: 0.3rem;
+}
+
+.stat-num {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* Clear Button */
+.btn-clear {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.btn-clear button {
+  background: transparent !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text-muted) !important;
+  padding: 0.25rem 0.5rem !important;
+  font-size: 0.65rem !important;
+  border-radius: 4px !important;
+  min-height: 0 !important;
+}
+
+.btn-clear button:hover {
+  background: rgba(239, 68, 68, 0.1) !important;
+  border-color: var(--error) !important;
+  color: var(--error) !important;
+}
+
+/* Separator */
+.hist-separator {
+  border-bottom: 1px solid var(--border);
+  margin: 0 0 1rem 0;
+}
+
+/* History Card */
+.hist-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.85rem 1rem;
+  transition: border-color 0.15s;
+}
+
+.hist-card:hover {
+  border-color: #404040;
+}
+
+.history-prompt {
+  font-size: 0.9rem;
+  color: var(--text);
+  line-height: 1.5;
+  margin-bottom: 0.3rem;
+}
+
+.history-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.history-time {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.history-badge {
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.badge-ok {
+  background: rgba(34, 197, 94, 0.15);
+  color: var(--success);
+}
+
+.badge-err {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--error);
+}
+
+/* History Buttons */
+.hist-view button {
+  background: var(--card) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text-secondary) !important;
+  padding: 0.3rem 0.6rem !important;
+  font-size: 0.7rem !important;
+  border-radius: 5px !important;
+  min-height: 0 !important;
+}
+
+.hist-view button:hover {
+  background: var(--accent) !important;
+  border-color: var(--accent) !important;
+  color: var(--bg) !important;
+}
+
+.hist-x button {
+  background: transparent !important;
+  border: none !important;
+  color: var(--text-muted) !important;
+  padding: 0.3rem !important;
+  font-size: 0.85rem !important;
+  border-radius: 4px !important;
+  min-height: 0 !important;
+  min-width: 0 !important;
+}
+
+.hist-x button:hover {
+  background: rgba(239, 68, 68, 0.15) !important;
+  color: var(--error) !important;
+}
+
+/* ==========================================================================
+   Page Titles
+   ========================================================================== */
+
+.page-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 0.25rem;
+}
+
+.page-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+}
