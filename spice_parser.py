@@ -63,11 +63,15 @@ def normalize_prompt(user_input: str) -> str:
     Returns:
         Normalized prompt string for the model
     """
-    # 1. Basic cleanup
+
+
+def normalize_prompt(user_input):
+    # 1. Nettoyage de base
+
     text = user_input.lower().replace(",", " ").replace("-", " ")
 
-    # 2. Extract source voltage
-    source_val = "12"  # Default
+    # 2. Extraction Source
+    source_val = "12"
     source_match = re.search(r"(\d+(?:\.\d+)?)\s*v", text)
     if source_match:
         source_val = source_match.group(1)
@@ -75,36 +79,71 @@ def normalize_prompt(user_input: str) -> str:
 
     components = []
 
-    # Sort type roots by length (longer first to match "resistor" before "r")
+    # Dictionnaire trié par longueur (IMPORTANT)
+    type_roots = {
+        "resistor": "resistor",
+        "inductor": "inductor",
+        "capacitor": "capacitor",
+        "diode": "diode",
+        "led": "diode",
+        "coil": "inductor",
+        "ohm": "resistor",
+        "res": "resistor",
+        "cap": "capacitor",
+        "ind": "inductor",
+        "r": "resistor",
+        "l": "inductor",
+        "c": "capacitor",
+        "d": "diode",
+        "h": "inductor",
+        "f": "capacitor",
+    }
     sorted_roots = sorted(
-        TYPE_ROOTS.items(), key=lambda item: len(item[0]), reverse=True
+        type_roots.items(), key=lambda item: len(item[0]), reverse=True
     )
+
+    ignore_words = [
+        "battery",
+        "source",
+        "generator",
+        "connected",
+        "with",
+        "to",
+        "and",
+        "in",
+        "series",
+        "circuit",
+        "a",
+        "an",
+        "the",
+    ]
 
     tokens = text.split()
     buffer_val = None
 
     for token in tokens:
-        # Remove trailing period (preserves decimals like "4.7k")
+        # --- CORRECTIF DÉCIMALE ---
+        # On enlève le point SEULEMENT s'il est à la fin du mot (ex: "10u.")
+        # Cela préserve "4.7k" mais nettoie "100 ohm."
         token = token.rstrip(".")
 
-        if not token or token in IGNORE_WORDS:
+        if not token or token in ignore_words:
             continue
 
-        # A. Is it a value? (supports decimals)
+        # A. Est-ce une valeur ? (Regex supporte les décimales \.\d+)
         val_match = re.match(r"^(\d+(?:\.\d+)?)([munpk]+)?(h|f|ohm)?$", token)
 
-        # B. Is it a component type?
+        # B. Est-ce un type ?
         found_type = None
         if not (val_match and not val_match.group(3)):
             for root, std_name in sorted_roots:
                 if root in token:
-                    # Avoid matching single letters in longer words
                     if len(token) > 3 and len(root) == 1 and not val_match:
                         continue
                     found_type = std_name
                     break
 
-        # Assembly logic
+        # LOGIQUE D'ASSEMBLAGE
         if val_match:
             val_num = val_match.group(1)
             unit_prefix = val_match.group(2) if val_match.group(2) else ""
@@ -119,7 +158,6 @@ def normalize_prompt(user_input: str) -> str:
                     components.append(f"a {val_num}{unit_prefix} resistor")
                 buffer_val = None
             else:
-                # Infer component type from unit prefix
                 if unit_prefix in ["u", "n", "p"]:
                     components.append(f"a {val_num}{unit_prefix}F capacitor")
                     buffer_val = None
@@ -134,6 +172,7 @@ def normalize_prompt(user_input: str) -> str:
                 if buffer_val:
                     components.append(f"a {buffer_val} resistor")
                     buffer_val = None
+
             elif buffer_val:
                 val_s = buffer_val
                 if found_type == "inductor":
@@ -142,22 +181,21 @@ def normalize_prompt(user_input: str) -> str:
                 elif found_type == "capacitor":
                     if not val_s.endswith("F"):
                         val_s += "F"
+
                 components.append(f"a {val_s} {found_type}")
                 buffer_val = None
 
-    # Handle remaining buffer value (assume resistor)
     if buffer_val:
         components.append(f"a {buffer_val} resistor")
 
     if not components:
-        return user_input  # Return original if no components detected
+        return "Error: No components detected"
 
-    # Build final prompt
-    if len(components) > 1:
-        comp_str = ", ".join(components[:-1]) + " and " + components[-1]
-    else:
-        comp_str = components[0]
-
+    comp_str = (
+        ", ".join(components[:-1]) + " and " + components[-1]
+        if len(components) > 1
+        else components[0]
+    )
     return f"A series circuit with {source_val}V source, {comp_str}."
 
 
@@ -185,29 +223,22 @@ class ParsedNetlist:
     cleaned_text: str
 
 
-def clean_netlist(netlist_text: str) -> str:
-    """
-    Clean the model output to ensure valid SPICE format (multiline).
+def clean_netlist(raw_output):
+    # 1. Nettoyage tokens T5
+    text = raw_output.replace("</s>", "").replace("<pad>", "").strip()
 
-    Uses negative lookahead to avoid splitting model names like "D1N4148".
+    # --- ÉTAPE 1 : SEGMENTATION INTELLIGENTE ---
 
-    Args:
-        netlist_text: Raw netlist string from model
+    # OLD (Bug): text = re.sub(r'\s+(?=[RCLVIDQM]\d+)', '\n', text)
 
-    Returns:
-        Cleaned netlist string
-    """
-    # 1. Clean T5 tokens
-    text = netlist_text.replace("</s>", "").replace("<pad>", "").strip()
-
-    # 2. Smart segmentation with negative lookahead
-    # Splits before [Letter][Number] but NOT if followed by 'N' (model names like D1N4148)
+    # NEW (Fix): On utilise un "Negative Lookahead" (?!N)
+    # On coupe devant [Lettre][Chiffre] SEULEMENT SI ce n'est pas suivi d'un 'N'
+    # Ça détecte "D2" mais ignore "D1N4148"
     text = re.sub(r"\s+(?=[RCLVIDQM]\d+(?!N))", "\n", text)
 
-    # 3. Fix .end collisions (e.g., "10u.end" -> "10u\n.end")
+    # Correction du collage .end (ex: "10u.end" -> "10u\n.end")
     text = re.sub(r"(\w)\.end", r"\1\n.end", text)
 
-    # 4. Filter and repair lines
     lines = text.split("\n")
     valid_lines = []
 
@@ -216,21 +247,30 @@ def clean_netlist(netlist_text: str) -> str:
         if not line:
             continue
 
-        # Reattach orphaned model names (e.g., "D1N4148" on its own line)
+        # (Gardez votre logique de D1N et suppression de chiffres ici)
         if line.startswith("D1N") and valid_lines:
             valid_lines[-1] += " " + line
             continue
-
-        # Skip numeric hallucinations (e.g., standalone "12")
         if line[0].isdigit():
             continue
 
-        # Validate SPICE line format
+        # Validation Standard SPICE
         first_char = line[0].upper()
         if first_char in ["R", "L", "C", "V", "I", "D", "Q", "M", ".", "*"]:
-            # Fix common unit typos
             line = line.replace("mmH", "mH").replace("uuF", "uF")
+
+            # === NOUVEAU PATCH ICI ===
+            # Si c'est un composant (R,L,C,D...) mais qu'il a moins de 3 parties (Nom N1 N2 Val)
+            # On considère que c'est une hallucination et on l'ignore.
+            parts = line.split()
+            if first_char in ["R", "L", "C", "D"] and len(parts) < 4:
+                continue  # On saute cette ligne incomplète (ex: "R2.")
+            # =========================
+
             valid_lines.append(line)
+    if not valid_lines or valid_lines[-1].lower() != ".end":
+        valid_lines.append(".end")
+    # ======================================
 
     return "\n".join(valid_lines)
 
@@ -479,3 +519,38 @@ def repair_netlist(netlist_text: str) -> str:
         final_lines.append(line)
 
     return "\n".join(final_lines)
+
+
+def ifNotValideCircuit(raw_netlist: str) -> str:
+    """
+    Si la netlist est invalide, tente de la réparer en supprimant
+    la dernière ligne de composant avant le .end (souvent une hallucination).
+    """
+    lines = raw_netlist.strip().split("\n")
+
+    # 1. Trouver l'index de la ligne .end (insensible à la casse)
+    end_idx = -1
+    for i, line in enumerate(lines):
+        if line.strip().lower() == ".end":
+            end_idx = i
+            break
+
+    # Si pas de .end, on considère la fin du fichier comme référence
+    if end_idx == -1:
+        end_idx = len(lines)
+
+    # 2. Chercher la ligne à supprimer en remontant depuis .end
+    idx_to_remove = -1
+    for i in range(end_idx - 1, -1, -1):
+        line = lines[i].strip()
+        # On cherche une ligne qui n'est ni vide, ni un commentaire (*)
+        if line and not line.startswith("*"):
+            idx_to_remove = i
+            break
+
+    # 3. Suppression si une ligne candidate a été trouvée
+    if idx_to_remove != -1:
+        print(f"Correction auto : Suppression de la ligne '{lines[idx_to_remove]}'")
+        del lines[idx_to_remove]
+
+    return "\n".join(lines)

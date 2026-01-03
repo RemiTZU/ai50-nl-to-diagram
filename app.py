@@ -11,6 +11,7 @@ from typing import Optional
 from circuit_generator import get_generator
 from spice_parser import (
     clean_netlist,
+    ifNotValideCircuit,
     validate_netlist,
     parse_netlist,
     normalize_prompt,
@@ -139,9 +140,14 @@ def generate_circuit(prompt: str) -> dict:
         # Validate
         is_valid, message = validate_netlist(netlist)
         if not is_valid:
-            result["error"] = f"Validation failed: {message}"
-            result["status"] = "error"
-            return result
+            netlist = ifNotValideCircuit(netlist)
+            is_valid, message = validate_netlist(netlist)
+            result["netlist"] = netlist
+            if not is_valid:
+
+                result["error"] = f"Validation failed: {message}"
+                result["status"] = "error"
+                return result
 
         # Draw circuit
         circuit_image = draw_circuit(netlist)
