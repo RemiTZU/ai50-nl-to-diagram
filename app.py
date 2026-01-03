@@ -9,7 +9,13 @@ from typing import Optional
 
 # Local imports
 from circuit_generator import get_generator
-from spice_parser import clean_netlist, validate_netlist, parse_netlist
+from spice_parser import (
+    clean_netlist,
+    validate_netlist,
+    parse_netlist,
+    normalize_prompt,
+    repair_netlist,
+)
 from circuit_drawer import draw_circuit, get_component_info
 from history_manager import (
     save_generation,
@@ -119,9 +125,15 @@ def generate_circuit(prompt: str) -> dict:
             result["error"] = "Failed to load model"
             return result
 
+        # Normalize prompt for better model understanding
+        normalized_prompt = normalize_prompt(prompt)
+
         # Generate netlist
-        raw_netlist = generator.generate(prompt)
+        raw_netlist = generator.generate(normalized_prompt)
+
+        # Clean and repair netlist
         netlist = clean_netlist(raw_netlist)
+        netlist = repair_netlist(netlist)
         result["netlist"] = netlist
 
         # Validate

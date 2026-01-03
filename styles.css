@@ -473,3 +473,23 @@ header {
   color: var(--text-muted);
   margin-bottom: 1.5rem;
 }
+
+/* ==========================================================================
+   Code Block Copy Button
+   ========================================================================== */
+
+[data-testid="stCodeBlock"] button {
+  background: var(--card) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text-secondary) !important;
+}
+
+[data-testid="stCodeBlock"] button:hover {
+  background: var(--accent) !important;
+  border-color: var(--accent) !important;
+  color: var(--bg) !important;
+}
+
+[data-testid="stCodeBlock"] button svg {
+  fill: currentColor !important;
+}

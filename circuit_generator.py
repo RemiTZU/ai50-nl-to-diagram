@@ -12,7 +12,7 @@ import os
 class CircuitGenerator:
     """Generates SPICE netlists from natural language descriptions."""
 
-    def __init__(self, model_name: str = "Remiwe/nl_to_spice"):
+    def __init__(self, model_name: str = "Remiwe/T5_final"):
         """
         Initialize the circuit generator.
 
@@ -54,16 +54,18 @@ class CircuitGenerator:
     def generate(
         self,
         description: str,
-        max_length: int = 200,
-        num_beams: int = 5,
+        max_length: int = 512,
+        num_beams: int = 10,
+        repetition_penalty: float = 2.5,
     ) -> str:
         """
         Generate a SPICE netlist from a text description.
 
         Args:
             description: Natural language circuit description
-            max_length: Maximum output length
-            num_beams: Number of beams for beam search
+            max_length: Maximum output length (default 512 for complex circuits)
+            num_beams: Number of beams for beam search (default 10 for better quality)
+            repetition_penalty: Penalty for repeated tokens (default 2.5)
 
         Returns:
             Generated SPICE netlist string
@@ -81,13 +83,14 @@ class CircuitGenerator:
             max_length=512,
         ).to(self.device)
 
-        # Generate
+        # Generate with improved parameters
         with torch.no_grad():
             outputs = self.model.generate(
                 inputs.input_ids,
                 max_length=max_length,
                 num_beams=num_beams,
                 early_stopping=True,
+                repetition_penalty=repetition_penalty,
             )
 
         # Decode

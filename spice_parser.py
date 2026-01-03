@@ -1,6 +1,6 @@
 """
 CircuitForge - SPICE Parser Module
-Handles netlist cleaning, parsing, and semantic validation.
+Handles prompt normalization, netlist cleaning, parsing, and semantic validation.
 """
 
 import re
@@ -10,6 +10,155 @@ from dataclasses import dataclass
 
 # Valid SPICE component prefixes
 VALID_PREFIXES = {"R", "C", "L", "V", "I", "D", "Q", "M", "X", "S"}
+
+# Component type roots for prompt normalization
+TYPE_ROOTS = {
+    "resistor": "resistor",
+    "inductor": "inductor",
+    "capacitor": "capacitor",
+    "diode": "diode",
+    "led": "diode",
+    "coil": "inductor",
+    "ohm": "resistor",
+    "res": "resistor",
+    "cap": "capacitor",
+    "ind": "inductor",
+    "r": "resistor",
+    "l": "inductor",
+    "c": "capacitor",
+    "d": "diode",
+    "h": "inductor",
+    "f": "capacitor",
+}
+
+IGNORE_WORDS = [
+    "battery",
+    "source",
+    "generator",
+    "connected",
+    "with",
+    "to",
+    "and",
+    "in",
+    "series",
+    "circuit",
+    "a",
+    "an",
+    "the",
+]
+
+
+def normalize_prompt(user_input: str) -> str:
+    """
+    Normalize user input to a standardized prompt format for the model.
+
+    Handles various input styles:
+    - Natural language: "A circuit with a 9V battery and 330 ohm resistor"
+    - Compact: "12V 100 ohm resistor 1mH inductor"
+    - Abbreviated: "9v, led, 100r"
+
+    Args:
+        user_input: Raw user input string
+
+    Returns:
+        Normalized prompt string for the model
+    """
+    # 1. Basic cleanup
+    text = user_input.lower().replace(",", " ").replace("-", " ")
+
+    # 2. Extract source voltage
+    source_val = "12"  # Default
+    source_match = re.search(r"(\d+(?:\.\d+)?)\s*v", text)
+    if source_match:
+        source_val = source_match.group(1)
+        text = text.replace(source_match.group(0), " ")
+
+    components = []
+
+    # Sort type roots by length (longer first to match "resistor" before "r")
+    sorted_roots = sorted(
+        TYPE_ROOTS.items(), key=lambda item: len(item[0]), reverse=True
+    )
+
+    tokens = text.split()
+    buffer_val = None
+
+    for token in tokens:
+        # Remove trailing period (preserves decimals like "4.7k")
+        token = token.rstrip(".")
+
+        if not token or token in IGNORE_WORDS:
+            continue
+
+        # A. Is it a value? (supports decimals)
+        val_match = re.match(r"^(\d+(?:\.\d+)?)([munpk]+)?(h|f|ohm)?$", token)
+
+        # B. Is it a component type?
+        found_type = None
+        if not (val_match and not val_match.group(3)):
+            for root, std_name in sorted_roots:
+                if root in token:
+                    # Avoid matching single letters in longer words
+                    if len(token) > 3 and len(root) == 1 and not val_match:
+                        continue
+                    found_type = std_name
+                    break
+
+        # Assembly logic
+        if val_match:
+            val_num = val_match.group(1)
+            unit_prefix = val_match.group(2) if val_match.group(2) else ""
+            unit_suffix = val_match.group(3)
+
+            if unit_suffix:
+                if "h" in unit_suffix:
+                    components.append(f"a {val_num}{unit_prefix}mH inductor")
+                elif "f" in unit_suffix:
+                    components.append(f"a {val_num}{unit_prefix}F capacitor")
+                elif "ohm" in unit_suffix:
+                    components.append(f"a {val_num}{unit_prefix} resistor")
+                buffer_val = None
+            else:
+                # Infer component type from unit prefix
+                if unit_prefix in ["u", "n", "p"]:
+                    components.append(f"a {val_num}{unit_prefix}F capacitor")
+                    buffer_val = None
+                elif unit_prefix == "m":
+                    buffer_val = f"{val_num}m"
+                else:
+                    buffer_val = f"{val_num}{unit_prefix}"
+
+        elif found_type:
+            if found_type == "diode":
+                components.append("a diode")
+                if buffer_val:
+                    components.append(f"a {buffer_val} resistor")
+                    buffer_val = None
+            elif buffer_val:
+                val_s = buffer_val
+                if found_type == "inductor":
+                    if not val_s.endswith("H"):
+                        val_s += "H"
+                elif found_type == "capacitor":
+                    if not val_s.endswith("F"):
+                        val_s += "F"
+                components.append(f"a {val_s} {found_type}")
+                buffer_val = None
+
+    # Handle remaining buffer value (assume resistor)
+    if buffer_val:
+        components.append(f"a {buffer_val} resistor")
+
+    if not components:
+        return user_input  # Return original if no components detected
+
+    # Build final prompt
+    if len(components) > 1:
+        comp_str = ", ".join(components[:-1]) + " and " + components[-1]
+    else:
+        comp_str = components[0]
+
+    return f"A series circuit with {source_val}V source, {comp_str}."
 
 
 @dataclass
@@ -40,27 +189,50 @@ def clean_netlist(netlist_text: str) -> str:
     """
     Clean the model output to ensure valid SPICE format (multiline).
 
+    Uses negative lookahead to avoid splitting model names like "D1N4148".
+
     Args:
         netlist_text: Raw netlist string from model
 
     Returns:
         Cleaned netlist string
     """
-    text = netlist_text.strip()
+    # 1. Clean T5 tokens
+    text = netlist_text.replace("</s>", "").replace("<pad>", "").strip()
 
-    # 1. Force newline before components
-    # Pattern: Space + [Letter][Number] + [Space] + [Number]
-    # This ensures we don't split model names like "D1N4148"
-    text = re.sub(r"\s(?=[RCLVIDQMS][0-9]+\s+[0-9])", "\n", text)
+    # 2. Smart segmentation with negative lookahead
+    # Splits before [Letter][Number] but NOT if followed by 'N' (model names like D1N4148)
+    text = re.sub(r"\s+(?=[RCLVIDQM]\d+(?!N))", "\n", text)
 
-    # 2. Force newline before .end command
-    if ".end" in text.lower():
-        text = re.sub(r"\.end", "\n.end", text, flags=re.IGNORECASE)
+    # 3. Fix .end collisions (e.g., "10u.end" -> "10u\n.end")
+    text = re.sub(r"(\w)\.end", r"\1\n.end", text)
 
-    # 3. Remove empty lines and extra whitespace
-    text = re.sub(r"\n+", "\n", text)
+    # 4. Filter and repair lines
+    lines = text.split("\n")
+    valid_lines = []
 
-    return text.strip()
+    for line in lines:
+        line = line.strip()
+        if not line:
+            continue
+
+        # Reattach orphaned model names (e.g., "D1N4148" on its own line)
+        if line.startswith("D1N") and valid_lines:
+            valid_lines[-1] += " " + line
+            continue
+
+        # Skip numeric hallucinations (e.g., standalone "12")
+        if line[0].isdigit():
+            continue
+
+        # Validate SPICE line format
+        first_char = line[0].upper()
+        if first_char in ["R", "L", "C", "V", "I", "D", "Q", "M", ".", "*"]:
+            # Fix common unit typos
+            line = line.replace("mmH", "mH").replace("uuF", "uF")
+            valid_lines.append(line)
+
+    return "\n".join(valid_lines)
 
 
 def parse_netlist(netlist_text: str) -> ParsedNetlist:
@@ -243,3 +415,67 @@ def format_netlist_display(netlist: str) -> str:
             formatted.append(f"  {line}")
 
     return "\n".join(formatted)
+
+
+def repair_netlist(netlist_text: str) -> str:
+    """
+    Repair common model errors in the netlist.
+
+    Fixes issues like:
+    - Inductors (L) mistakenly generated instead of Diodes (D)
+    - Incorrect component identification based on value/model
+
+    Args:
+        netlist_text: Netlist string to repair
+
+    Returns:
+        Repaired netlist string
+    """
+    # First clean the netlist
+    text = netlist_text.replace(".end", "\n.end")
+
+    lines = []
+    tokens = text.split()
+
+    current_line = []
+    comp_start_pattern = re.compile(r"^[RCLVIDQM][0-9]+")
+
+    for token in tokens:
+        # If token looks like component start and we have content, start new line
+        if comp_start_pattern.match(token) and current_line:
+            lines.append(" ".join(current_line))
+            current_line = [token]
+        elif token.lower() == ".end":
+            if current_line:
+                lines.append(" ".join(current_line))
+            current_line = []
+            lines.append(".end")
+        else:
+            current_line.append(token)
+
+    if current_line:
+        lines.append(" ".join(current_line))
+
+    # Repair semantic errors (L vs D confusion)
+    final_lines = []
+    for line in lines:
+        parts = line.strip().split()
+        if not parts:
+            continue
+
+        name = parts[0]
+        prefix = name[0].upper()
+
+        # Fix: Inductor (L) hallucinated instead of Diode (D)
+        # Check if value looks like a diode model (1N4148, LED, D1N...)
+        if prefix == "L" and len(parts) >= 4:
+            val = parts[-1].upper()
+            if "LED" in val or "1N" in val or "DIODE" in val:
+                # Force type to Diode
+                new_name = "D" + name[1:]  # L1 -> D1
+                parts[0] = new_name
+                line = " ".join(parts)
+
+        final_lines.append(line)
+
+    return "\n".join(final_lines)

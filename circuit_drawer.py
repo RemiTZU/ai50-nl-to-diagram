@@ -170,13 +170,25 @@ def get_component_info(netlist_text: str) -> List[dict]:
 
     components = []
     for comp in parsed.components:
+        # For voltage/current sources, combine value parts (e.g., "DC 9" -> "DC 9V")
+        value = comp.value or "-"
+        if comp.type in ("V", "I") and comp.raw_line:
+            parts = comp.raw_line.split()
+            if len(parts) >= 4:
+                # Join all value parts after node2 (e.g., "DC 9" or just "9")
+                value_parts = parts[3:]
+                value = " ".join(value_parts)
+                # Add unit if it's just a number
+                if value.replace(".", "").replace("-", "").isdigit():
+                    value += "V" if comp.type == "V" else "A"
+
         components.append(
             {
                 "name": comp.name,
                 "type": comp.type,
                 "type_name": _get_type_name(comp.type),
                 "nodes": f"{comp.node1} - {comp.node2}",
-                "value": comp.value or "-",
+                "value": value,
             }
         )
 
