@@ -5,7 +5,6 @@ Main Streamlit Application
 
 import streamlit as st
 import time
-from typing import Optional
 
 # Local imports
 from circuit_generator import get_generator
@@ -381,6 +380,7 @@ with tab_gen:
             )
             if new_btn and st.session_state.current_result:
                 st.session_state.current_result = None
+                st.session_state.prefill_prompt = ""  # Clear input
                 st.rerun()
 
         st.markdown("<br>", unsafe_allow_html=True)

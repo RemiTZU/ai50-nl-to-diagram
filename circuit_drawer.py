@@ -323,14 +323,6 @@ def draw_circuit(netlist_text: str, show: bool = False) -> Optional[CircuitImage
     )
 
 
-def draw_circuit_simple(netlist_text: str) -> Optional[str]:
-    """
-    Simplified circuit drawing - returns display SVG string only.
-    """
-    result = draw_circuit(netlist_text, show=False)
-    return result.svg_display if result else None
-
-
 def get_component_info(netlist_text: str) -> List[dict]:
     """
     Extract component information for display.

@@ -6,7 +6,6 @@ Handles model loading and SPICE netlist generation from natural language.
 import torch
 from transformers import T5Tokenizer, T5ForConditionalGeneration
 from typing import Optional
-import os
 
 
 class CircuitGenerator:
