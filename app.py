@@ -11,11 +11,7 @@ from typing import Optional
 from circuit_generator import get_generator
 from spice_parser import (
     clean_netlist,
-    ifNotValideCircuit,
     validate_netlist,
-    parse_netlist,
-    normalize_prompt,
-    repair_netlist,
 )
 from circuit_drawer import draw_circuit, get_component_info
 from history_manager import (
@@ -57,10 +53,9 @@ BOLT_ICON = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill=
 BOLT_ICON_YELLOW = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#facc15"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>"""
 
 EXAMPLES = [
-    "9V battery with 1k resistor in series",
-    "5V source with two resistors in series",
-    "12V battery with resistor and capacitor in series",
-    "Battery with 100 ohm resistor",
+    "A feedback circuit based on an RC network powered by a 3.3V DC source. The main path is a low-pass RC stage. The feedback is implemented using a resistive-capacitive feedback network, from node out to node n1.",
+    "A 3-stage RC high-pass filter with the output taken at n2. It is powered by a 12V DC source. The filter type is high-pass. The filter has 3 stage(s). Stage 1 uses R1=4.7k and C1=47n. Stage 2 uses R2=22k and C2=10n. Stage 3 uses R3=1k and C3=2.2u.",
+    "A feedback circuit based on an RC network powered by a 12V DC source. The main path is a low-pass RC stage. The circuit uses two cascaded RC stages. The feedback is implemented using a resistive-capacitive feedback network, from node out to node in.",
 ]
 
 # =============================================================================
@@ -126,28 +121,19 @@ def generate_circuit(prompt: str) -> dict:
             result["error"] = "Failed to load model"
             return result
 
-        # Normalize prompt for better model understanding
-        normalized_prompt = normalize_prompt(prompt)
+        # Generate netlist (direct, no normalization - same as wen.py)
+        raw_netlist = generator.generate(prompt)
 
-        # Generate netlist
-        raw_netlist = generator.generate(normalized_prompt)
-
-        # Clean and repair netlist
+        # Clean netlist (same as wen.py)
         netlist = clean_netlist(raw_netlist)
-        netlist = repair_netlist(netlist)
         result["netlist"] = netlist
 
         # Validate
         is_valid, message = validate_netlist(netlist)
         if not is_valid:
-            netlist = ifNotValideCircuit(netlist)
-            is_valid, message = validate_netlist(netlist)
-            result["netlist"] = netlist
-            if not is_valid:
-
-                result["error"] = f"Validation failed: {message}"
-                result["status"] = "error"
-                return result
+            result["error"] = f"Validation failed: {message}"
+            result["status"] = "error"
+            return result
 
         # Draw circuit
         circuit_image = draw_circuit(netlist)
@@ -223,10 +209,12 @@ def render_result(result: dict):
 
     # Circuit diagram (display version - white on dark)
     if result.get("svg_display"):
+        # Escape any problematic characters in SVG
+        svg_safe = result["svg_display"].replace("\n", " ")
         st.markdown(
             f"""
-            <div style="background: #141414; border: 1px solid #262626; border-radius: 10px; padding: 1rem; margin: 1rem 0;">
-                {result['svg_display']}
+            <div style="background: var(--bg, #0a0a0a); border: 1px solid #262626; border-radius: 10px; padding: 1.5rem; margin: 1rem 0; display: flex; justify-content: center; align-items: center; min-height: 300px;">
+                {svg_safe}
             </div>
             """,
             unsafe_allow_html=True,
@@ -402,40 +390,24 @@ with tab_gen:
         st.markdown("<br>", unsafe_allow_html=True)
         st.markdown('<p class="label">Quick start</p>', unsafe_allow_html=True)
 
-        ex1, ex2 = st.columns(2)
-
-        with ex1:
-            st.markdown('<div class="btn-secondary btn-small">', unsafe_allow_html=True)
-            if st.button(
-                EXAMPLES[0], key="e1", use_container_width=True, disabled=is_busy
-            ):
-                st.session_state.run_ex = EXAMPLES[0]
-                st.rerun()
-            st.markdown("</div>", unsafe_allow_html=True)
-
-            st.markdown('<div class="btn-secondary btn-small">', unsafe_allow_html=True)
-            if st.button(
-                EXAMPLES[2], key="e3", use_container_width=True, disabled=is_busy
-            ):
-                st.session_state.run_ex = EXAMPLES[2]
-                st.rerun()
-            st.markdown("</div>", unsafe_allow_html=True)
-
-        with ex2:
-            st.markdown('<div class="btn-secondary btn-small">', unsafe_allow_html=True)
-            if st.button(
-                EXAMPLES[1], key="e2", use_container_width=True, disabled=is_busy
-            ):
-                st.session_state.run_ex = EXAMPLES[1]
-                st.rerun()
-            st.markdown("</div>", unsafe_allow_html=True)
-
-            st.markdown('<div class="btn-secondary btn-small">', unsafe_allow_html=True)
-            if st.button(
-                EXAMPLES[3], key="e4", use_container_width=True, disabled=is_busy
-            ):
-                st.session_state.run_ex = EXAMPLES[3]
-                st.rerun()
+        # 3 examples with compact spacing - use container
+        with st.container():
+            st.markdown('<div class="quickstart-btns">', unsafe_allow_html=True)
+            for i, example in enumerate(EXAMPLES):
+                # Truncate to ~180 chars, add number prefix
+                display_text = (
+                    f"{i+1}. {example[:180]}..."
+                    if len(example) > 180
+                    else f"{i+1}. {example}"
+                )
+                if st.button(
+                    display_text,
+                    key=f"e{i}",
+                    use_container_width=True,
+                    disabled=is_busy,
+                ):
+                    st.session_state.run_ex = example
+                    st.rerun()
             st.markdown("</div>", unsafe_allow_html=True)
 
     # Right Column - Result
