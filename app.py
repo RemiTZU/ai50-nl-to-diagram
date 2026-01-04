@@ -190,16 +190,6 @@ def render_empty_state(title: str, desc: str):
 def render_result(result: dict):
     """Render the generation result."""
 
-    # Header with prompt
-    st.markdown(
-        f"""
-        <div class="result-box">
-            <div class="result-header">{result['prompt']}</div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-
     if result["status"] == "error":
         st.error(f"Error: {result.get('error', 'Unknown error')}")
         if result.get("netlist"):
@@ -248,7 +238,7 @@ def render_history_card(g: dict, idx: int):
     badge = "badge-ok" if g["status"] == "completed" else "badge-err"
     badge_txt = "OK" if g["status"] == "completed" else "Err"
 
-    col_card, col_btns = st.columns([8, 2])
+    col_card, col_view, col_x = st.columns([7, 1.5, 0.5], gap="small")
 
     with col_card:
         st.markdown(
@@ -264,42 +254,40 @@ def render_history_card(g: dict, idx: int):
             unsafe_allow_html=True,
         )
 
-    with col_btns:
-        btn_view, btn_x = st.columns([3, 1])
+    with col_view:
+        # Check if this item is already loaded
+        is_loaded = (
+            st.session_state.current_result
+            and st.session_state.current_result.get("id") == g["id"]
+        )
+        st.markdown('<div class="hist-view">', unsafe_allow_html=True)
+        btn_label = "View" if is_loaded else "Load"
+        if st.button(btn_label, key=f"v{idx}", use_container_width=True):
+            if not is_loaded:
+                # Load full data from disk
+                full_data = load_generation(g["id"])
+                st.session_state.current_result = full_data if full_data else g
+                st.session_state.prefill_prompt = g["prompt"]  # Fill input
+            # Flag to click Generate tab
+            st.session_state.click_generate_tab = True
+            st.rerun()
+        st.markdown("</div>", unsafe_allow_html=True)
 
-        with btn_view:
-            # Check if this item is already loaded
-            is_loaded = (
+    with col_x:
+        st.markdown('<div class="hist-x">', unsafe_allow_html=True)
+        if st.button("\u2715", key=f"x{idx}"):
+            # Delete from disk
+            delete_generation(g["id"])
+            st.session_state.generations = [
+                x for x in st.session_state.generations if x["id"] != g["id"]
+            ]
+            if (
                 st.session_state.current_result
-                and st.session_state.current_result.get("id") == g["id"]
-            )
-            st.markdown('<div class="hist-view">', unsafe_allow_html=True)
-            btn_label = "View" if is_loaded else "Load"
-            if st.button(btn_label, key=f"v{idx}", use_container_width=True):
-                if not is_loaded:
-                    # Load full data from disk
-                    full_data = load_generation(g["id"])
-                    st.session_state.current_result = full_data if full_data else g
-                # Flag to click Generate tab
-                st.session_state.click_generate_tab = True
-                st.rerun()
-            st.markdown("</div>", unsafe_allow_html=True)
-
-        with btn_x:
-            st.markdown('<div class="hist-x">', unsafe_allow_html=True)
-            if st.button("\u2715", key=f"x{idx}"):
-                # Delete from disk
-                delete_generation(g["id"])
-                st.session_state.generations = [
-                    x for x in st.session_state.generations if x["id"] != g["id"]
-                ]
-                if (
-                    st.session_state.current_result
-                    and st.session_state.current_result["id"] == g["id"]
-                ):
-                    st.session_state.current_result = None
-                st.rerun()
-            st.markdown("</div>", unsafe_allow_html=True)
+                and st.session_state.current_result["id"] == g["id"]
+            ):
+                st.session_state.current_result = None
+            st.rerun()
+        st.markdown("</div>", unsafe_allow_html=True)
 
 
 # =============================================================================
@@ -359,8 +347,16 @@ with tab_gen:
             '<p class="label">Describe your circuit</p>', unsafe_allow_html=True
         )
 
+        # Get prefilled prompt from quickstart or current result
+        default_value = ""
+        if "prefill_prompt" in st.session_state:
+            default_value = st.session_state.prefill_prompt
+        elif st.session_state.current_result:
+            default_value = st.session_state.current_result.get("prompt", "")
+
         prompt = st.text_area(
             "prompt",
+            value=default_value,
             placeholder="Example: LED circuit with 9V battery and 330 ohm resistor...",
             height=140,
             label_visibility="collapsed",
@@ -466,6 +462,7 @@ with tab_gen:
     if "run_ex" in st.session_state and not is_busy:
         st.session_state.is_generating = True
         st.session_state.pending_prompt = st.session_state.run_ex
+        st.session_state.prefill_prompt = st.session_state.run_ex  # Also fill input
         del st.session_state.run_ex
         st.rerun()
 

@@ -407,6 +407,7 @@ header {
   border-radius: var(--radius);
   padding: 0.85rem 1rem;
   transition: border-color 0.15s;
+  margin-bottom: 0.75rem;
 }
 
 .hist-card:hover {
@@ -449,36 +450,56 @@ header {
   color: var(--error);
 }
 
-/* History Buttons */
+/* History row - align columns vertically */
+[data-testid="stHorizontalBlock"]:has(.hist-card) {
+  align-items: center !important;
+}
+
+[data-testid="stHorizontalBlock"]:has(.hist-card) [data-testid="column"] {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* History Buttons Container - align vertically centered */
+.hist-view,
+.hist-x {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+}
+
 .hist-view button {
-  background: var(--card) !important;
-  border: 1px solid var(--border) !important;
-  color: var(--text-secondary) !important;
-  padding: 0.3rem 0.6rem !important;
-  font-size: 0.7rem !important;
-  border-radius: 5px !important;
+  background: var(--accent) !important;
+  border: 1px solid var(--accent) !important;
+  color: var(--bg) !important;
+  padding: 0.5rem 1.2rem !important;
+  font-size: 0.75rem !important;
+  border-radius: 6px !important;
   min-height: 0 !important;
+  font-weight: 500 !important;
 }
 
 .hist-view button:hover {
-  background: var(--accent) !important;
-  border-color: var(--accent) !important;
-  color: var(--bg) !important;
+  background: var(--accent-hover) !important;
+  border-color: var(--accent-hover) !important;
 }
 
 .hist-x button {
   background: transparent !important;
-  border: none !important;
+  border: 1px solid var(--border) !important;
   color: var(--text-muted) !important;
-  padding: 0.3rem !important;
+  padding: 0.5rem 0.6rem !important;
   font-size: 0.85rem !important;
-  border-radius: 4px !important;
+  border-radius: 6px !important;
   min-height: 0 !important;
   min-width: 0 !important;
 }
 
 .hist-x button:hover {
   background: rgba(239, 68, 68, 0.15) !important;
+  border-color: var(--error) !important;
   color: var(--error) !important;
 }
 
