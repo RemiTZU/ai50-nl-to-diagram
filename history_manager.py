@@ -1,58 +1,44 @@
 """
 CircuitForge - History Manager
-Handles saving and loading generation history to disk.
+Persists generation results to disk (JSON index + SVG/SPICE files).
 """
 
 import json
 import os
 from typing import List, Optional
-from datetime import datetime
 
 HISTORY_DIR = "history"
 HISTORY_FILE = os.path.join(HISTORY_DIR, "generations.json")
 
 
 def ensure_history_dir():
-    """Create history directory if it doesn't exist."""
+    """Create history directory if needed."""
     if not os.path.exists(HISTORY_DIR):
         os.makedirs(HISTORY_DIR)
 
 
 def save_generation(result: dict) -> bool:
-    """
-    Save a generation result to disk.
-
-    Args:
-        result: Generation result dictionary
-
-    Returns:
-        True if successful
-    """
+    """Save generation result: SVG files + netlist + JSON metadata."""
     try:
         ensure_history_dir()
-
-        # Save SVG files separately
         gen_id = result["id"]
 
+        # Save SVG files separately (not in JSON to keep index small)
         if result.get("svg_display"):
-            svg_display_path = os.path.join(HISTORY_DIR, f"{gen_id}_display.svg")
-            with open(svg_display_path, "w") as f:
+            with open(os.path.join(HISTORY_DIR, f"{gen_id}_display.svg"), "w") as f:
                 f.write(result["svg_display"])
 
         if result.get("svg_download"):
-            svg_download_path = os.path.join(HISTORY_DIR, f"{gen_id}_download.svg")
-            with open(svg_download_path, "w") as f:
+            with open(os.path.join(HISTORY_DIR, f"{gen_id}_download.svg"), "w") as f:
                 f.write(result["svg_download"])
 
         if result.get("netlist"):
-            netlist_path = os.path.join(HISTORY_DIR, f"{gen_id}.spice")
-            with open(netlist_path, "w") as f:
+            with open(os.path.join(HISTORY_DIR, f"{gen_id}.spice"), "w") as f:
                 f.write(result["netlist"])
 
-        # Load existing history
+        # Update JSON index (metadata only)
         history = load_history_index()
 
-        # Add new entry (store metadata only, not full SVG)
         entry = {
             "id": result["id"],
             "prompt": result["prompt"],
@@ -64,7 +50,6 @@ def save_generation(result: dict) -> bool:
             "components": result.get("components"),
         }
 
-        # Check if already exists (update) or new (append)
         existing_idx = next(
             (i for i, h in enumerate(history) if h["id"] == result["id"]), None
         )
@@ -73,7 +58,6 @@ def save_generation(result: dict) -> bool:
         else:
             history.append(entry)
 
-        # Save index
         with open(HISTORY_FILE, "w") as f:
             json.dump(history, f, indent=2)
 
@@ -85,34 +69,19 @@ def save_generation(result: dict) -> bool:
 
 
 def load_history_index() -> List[dict]:
-    """
-    Load the history index (metadata only).
-
-    Returns:
-        List of generation metadata dictionaries
-    """
+    """Load history index (metadata only, no SVG data)."""
     try:
         if os.path.exists(HISTORY_FILE):
             with open(HISTORY_FILE, "r") as f:
                 return json.load(f)
     except Exception as e:
-        print(f"Error loading history index: {e}")
-
+        print(f"Error loading history: {e}")
     return []
 
 
 def load_generation(gen_id: str) -> Optional[dict]:
-    """
-    Load a full generation result from disk.
-
-    Args:
-        gen_id: Generation ID
-
-    Returns:
-        Full generation dictionary with SVG data, or None
-    """
+    """Load full generation data including SVG and netlist files."""
     try:
-        # Load index to get metadata
         history = load_history_index()
         entry = next((h for h in history if h["id"] == gen_id), None)
 
@@ -121,7 +90,7 @@ def load_generation(gen_id: str) -> Optional[dict]:
 
         result = dict(entry)
 
-        # Load SVG files
+        # Load associated files
         svg_display_path = os.path.join(HISTORY_DIR, f"{gen_id}_display.svg")
         if os.path.exists(svg_display_path):
             with open(svg_display_path, "r") as f:
@@ -132,7 +101,6 @@ def load_generation(gen_id: str) -> Optional[dict]:
             with open(svg_download_path, "r") as f:
                 result["svg_download"] = f.read()
 
-        # Load netlist
         netlist_path = os.path.join(HISTORY_DIR, f"{gen_id}.spice")
         if os.path.exists(netlist_path):
             with open(netlist_path, "r") as f:
@@ -146,15 +114,7 @@ def load_generation(gen_id: str) -> Optional[dict]:
 
 
 def delete_generation(gen_id: str) -> bool:
-    """
-    Delete a generation from disk.
-
-    Args:
-        gen_id: Generation ID
-
-    Returns:
-        True if successful
-    """
+    """Delete generation and associated files."""
     try:
         # Remove files
         for suffix in ["_display.svg", "_download.svg", ".spice"]:
@@ -177,12 +137,7 @@ def delete_generation(gen_id: str) -> bool:
 
 
 def clear_all_history() -> bool:
-    """
-    Clear all history from disk.
-
-    Returns:
-        True if successful
-    """
+    """Delete all history files and reset index."""
     try:
         if os.path.exists(HISTORY_DIR):
             for filename in os.listdir(HISTORY_DIR):
@@ -190,7 +145,6 @@ def clear_all_history() -> bool:
                 if os.path.isfile(filepath):
                     os.remove(filepath)
 
-        # Reset index
         with open(HISTORY_FILE, "w") as f:
             json.dump([], f)
 
@@ -202,12 +156,7 @@ def clear_all_history() -> bool:
 
 
 def load_all_generations() -> List[dict]:
-    """
-    Load all generations with full data.
-
-    Returns:
-        List of full generation dictionaries
-    """
+    """Load all generations with full data (for app startup)."""
     history = load_history_index()
     full_history = []
 

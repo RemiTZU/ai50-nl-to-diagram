@@ -1,7 +1,6 @@
 """
-CircuitForge - Circuit Drawing Module
-Generates circuit diagrams from SPICE netlists using schemdraw.
-Advanced layout with transistor support and feedback handling.
+CircuitForge - Circuit Drawer
+Renders SPICE netlists as circuit diagrams using schemdraw.
 """
 
 import schemdraw
@@ -10,8 +9,7 @@ from typing import List, Optional, Dict, Any
 from collections import defaultdict
 from dataclasses import dataclass
 
-
-# Mapping from SPICE prefix to schemdraw element
+# Map SPICE prefixes to schemdraw elements
 ELEMENT_MAP = {
     "R": elm.Resistor,
     "C": elm.Capacitor,
@@ -27,19 +25,14 @@ ELEMENT_MAP = {
 
 @dataclass
 class CircuitImage:
-    """Container for circuit image data."""
-
-    svg_display: str  # White lines on transparent (for dark UI)
-    svg_download: str  # Black lines on white (for download)
+    svg_display: str  # White on dark (for UI)
+    svg_download: str  # Black on white (for export)
     width: int = 800
     height: int = 600
 
 
 def _parse_components(netlist_text: str) -> List[Dict[str, Any]]:
-    """
-    Parse netlist into component dictionaries.
-    Handles both 2-terminal and 3-terminal (transistor) components.
-    """
+    """Parse netlist lines into component dictionaries."""
     lines = netlist_text.strip().split("\n")
     all_components = []
 
@@ -53,7 +46,7 @@ def _parse_components(netlist_text: str) -> List[Dict[str, Any]]:
         name = parts[0]
         comp_type = name[0].upper()
 
-        # Special handling for transistors (3+ terminals)
+        # Transistors have 3 terminals (Q: C/B/E, M: D/G/S)
         if comp_type in ["Q", "M"]:
             if len(parts) >= 4:
                 node1, node2, node3 = parts[1], parts[2], parts[3]
@@ -61,9 +54,9 @@ def _parse_components(netlist_text: str) -> List[Dict[str, Any]]:
                 all_components.append(
                     {
                         "name": name,
-                        "n1": node1,  # Collector/Drain
-                        "n2": node2,  # Base/Gate
-                        "n3": node3,  # Emitter/Source
+                        "n1": node1,
+                        "n2": node2,
+                        "n3": node3,
                         "val": value,
                         "type": comp_type,
                     }
@@ -86,32 +79,28 @@ def _parse_components(netlist_text: str) -> List[Dict[str, Any]]:
 
 
 def _draw_circuit_internal(
-    netlist_text: str,
-    color: str = "#000000",
-    bgcolor: str = "white",
+    netlist_text: str, color: str = "#000000", bgcolor: str = "white"
 ) -> Optional[str]:
     """
-    Internal function to draw circuit with specified colors.
-    Uses grid layout with intelligent component placement.
+    Draw circuit with specified colors.
+    Uses iterative placement: starts from source, places components as nodes become known.
     """
     try:
         all_components = _parse_components(netlist_text)
-
         if not all_components:
             return None
 
-        # Separate source and other components
+        # Separate power source from other components
         source = next((c for c in all_components if c["type"] in ["V", "I"]), None)
         components = [c for c in all_components if c["type"] not in ["V", "I"]]
 
         if not source:
             return None
 
-        # Create drawing
         with schemdraw.Drawing(show=False) as d:
             d.config(fontsize=9, unit=2, color=color, bgcolor=bgcolor)
 
-            # Step 1: Draw main source (vertical, going up, on the left)
+            # Draw source vertically on the left
             src_label = f"{source['name']}\n{source['val']}"
             src = d.add(
                 ELEMENT_MAP[source["type"]](label=src_label)
@@ -120,28 +109,24 @@ def _draw_circuit_internal(
                 .label("+", loc="top")
             )
 
-            # Key positions
             src_top = src.end  # + terminal
             src_bot = src.start  # - terminal (ground)
 
-            # Step 2: Identify circuit structure
             ground = "0"
             source_pos_node = source["n1"]
 
-            # Node position dictionary
+            # Track node positions as we draw
             node_pos = {source["n2"]: src_bot, source_pos_node: src_top}
-
-            # Track drawn components
             drawn = set()
 
-            # Create connection graph for branch detection
+            # Build connection graph for parallel branch detection
             node_connections = defaultdict(list)
             for comp in components:
                 node_connections[comp["n1"]].append(comp)
                 if "n2" in comp:
                     node_connections[comp["n2"]].append(comp)
 
-            # Step 3: Draw components in passes
+            # Iteratively place components (multiple passes)
             max_iterations = len(components) * 3
             iteration = 0
 
@@ -153,7 +138,7 @@ def _draw_circuit_internal(
                     if comp["name"] in drawn:
                         continue
 
-                    # Can only draw if start node is known
+                    # Can only draw if start node position is known
                     if comp["n1"] not in node_pos:
                         continue
 
@@ -161,7 +146,7 @@ def _draw_circuit_internal(
                     label = f"{comp['name']}\n{comp['val']}"
                     start_pos = node_pos[comp["n1"]]
 
-                    # Special handling for transistors (3 terminals)
+                    # Handle 3-terminal components (transistors)
                     if comp["type"] in ["Q", "M"] and "n3" in comp:
                         if comp["type"] == "Q":
                             elem = d.add(elm.BjtNpn(circle=True).right().at(start_pos))
@@ -169,7 +154,7 @@ def _draw_circuit_internal(
                                 node_pos[comp["n3"]] = elem.emitter
                             if hasattr(elem, "base"):
                                 node_pos[comp["n2"]] = elem.base
-                        else:  # MOSFET
+                        else:
                             elem = d.add(elm.NFet().right().at(start_pos))
                             if hasattr(elem, "source"):
                                 node_pos[comp["n3"]] = elem.source
@@ -182,32 +167,27 @@ def _draw_circuit_internal(
                         made_progress = True
                         continue
 
-                    # Orientation for 2-terminal components
+                    # 2-terminal component placement
                     if comp["n2"] == ground:
-                        # Component to ground = vertical down
+                        # To ground: draw downward
                         elem = d.add(elem_class(label=label).down().at(start_pos))
-
                     elif comp["n2"] not in node_pos:
-                        # New node - decide horizontal or vertical
+                        # New node: check for parallel siblings
                         siblings = [
                             c
                             for c in node_connections[comp["n1"]]
                             if c["name"] not in drawn and c["name"] != comp["name"]
                         ]
-
                         if len(siblings) > 0:
-                            # Parallel branch
                             d.push()
                             elem = d.add(elem_class(label=label).right().at(start_pos))
                             node_pos[comp["n2"]] = elem.end
                             d.pop()
                         else:
-                            # Series component
                             elem = d.add(elem_class(label=label).right().at(start_pos))
                             node_pos[comp["n2"]] = elem.end
-
                     else:
-                        # Existing node - direct connection (feedback)
+                        # Both nodes known: direct connection (feedback path)
                         elem = d.add(elem_class(label=label).to(node_pos[comp["n2"]]))
 
                     drawn.add(comp["name"])
@@ -216,7 +196,7 @@ def _draw_circuit_internal(
                 if not made_progress:
                     break
 
-            # Pass 2: Handle feedback components (missing nodes)
+            # Second pass: handle remaining components (feedback paths)
             remaining = [c for c in components if c["name"] not in drawn]
 
             if remaining:
@@ -240,10 +220,9 @@ def _draw_circuit_internal(
 
                     if comp["n1"] in node_pos:
                         if comp["n2"] in node_pos:
-                            # Both nodes exist: feedback path
+                            # Feedback: route around existing circuit
                             start = node_pos[comp["n1"]]
                             end = node_pos[comp["n2"]]
-
                             d.add(elm.Line(lw=0.5).up().at(start).length(1.5))
                             current_pos = d.here
                             d.add(elm.Line(lw=0.5).right().at(current_pos).tox(end))
@@ -266,7 +245,7 @@ def _draw_circuit_internal(
 
                         drawn.add(comp["name"])
 
-            # Step 4: Close the circuit
+            # Close the circuit back to ground
             last_nodes = [
                 n for n in node_pos.keys() if n != ground and n != source_pos_node
             ]
@@ -294,26 +273,13 @@ def _draw_circuit_internal(
 
 def draw_circuit(netlist_text: str, show: bool = False) -> Optional[CircuitImage]:
     """
-    Draw a circuit diagram from a SPICE netlist.
-
-    Creates two versions:
-    - Display version: white lines on dark background (for dark UI)
-    - Download version: black lines on white background
-
-    Args:
-        netlist_text: SPICE netlist string
-        show: Whether to display the circuit (for debugging)
-
-    Returns:
-        CircuitImage object with both SVG versions, or None on error
+    Generate circuit diagram from netlist.
+    Returns two SVG versions: display (white on dark) and download (black on white).
     """
-    # Version for display (white on none - container provides background)
     svg_display = _draw_circuit_internal(netlist_text, color="#fafafa", bgcolor="none")
-
     if svg_display is None:
         return None
 
-    # Version for download (black on white)
     svg_download = _draw_circuit_internal(
         netlist_text, color="#000000", bgcolor="white"
     )
@@ -324,16 +290,12 @@ def draw_circuit(netlist_text: str, show: bool = False) -> Optional[CircuitImage
 
 
 def get_component_info(netlist_text: str) -> List[dict]:
-    """
-    Extract component information for display.
-    """
+    """Extract component list for display in UI."""
     all_components = _parse_components(netlist_text)
-
     components = []
-    for comp in all_components:
-        # Get raw line for value extraction
-        value = comp.get("val", "-") or "-"
 
+    for comp in all_components:
+        value = comp.get("val", "-") or "-"
         components.append(
             {
                 "name": comp["name"],
@@ -348,7 +310,7 @@ def get_component_info(netlist_text: str) -> List[dict]:
 
 
 def _get_type_name(prefix: str) -> str:
-    """Get human-readable component type name."""
+    """Map SPICE prefix to human-readable name."""
     names = {
         "R": "Resistor",
         "C": "Capacitor",

@@ -1,17 +1,13 @@
 """
-CircuitForge - AI-Powered Electronic Circuit Generator
-Main Streamlit Application
+CircuitForge - Main Streamlit Application
+Web interface for generating circuit diagrams from natural language.
 """
 
 import streamlit as st
 import time
 
-# Local imports
 from circuit_generator import get_generator
-from spice_parser import (
-    clean_netlist,
-    validate_netlist,
-)
+from spice_parser import clean_netlist, validate_netlist
 from circuit_drawer import draw_circuit, get_component_info
 from history_manager import (
     save_generation,
@@ -21,20 +17,13 @@ from history_manager import (
     clear_all_history,
 )
 
-# =============================================================================
-# Page Config
-# =============================================================================
-
+# Page config
 st.set_page_config(
     page_title="CircuitForge",
     page_icon="",
     layout="wide",
     initial_sidebar_state="collapsed",
 )
-
-# =============================================================================
-# Load Styles
-# =============================================================================
 
 
 def load_css():
@@ -44,25 +33,20 @@ def load_css():
 
 st.markdown(f"<style>{load_css()}</style>", unsafe_allow_html=True)
 
-# =============================================================================
-# Constants
-# =============================================================================
-
+# Icons (inline SVG)
 BOLT_ICON = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>"""
 BOLT_ICON_YELLOW = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#facc15"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>"""
 
+# Pre-defined example prompts for quick start
 EXAMPLES = [
-    "A feedback circuit based on an RC network powered by a 3.3V DC source. The main path is a low-pass RC stage. The feedback is implemented using a resistive-capacitive feedback network, from node out to node n1.",
-    "A 3-stage RC high-pass filter with the output taken at n2. It is powered by a 12V DC source. The filter type is high-pass. The filter has 3 stage(s). Stage 1 uses R1=4.7k and C1=47n. Stage 2 uses R2=22k and C2=10n. Stage 3 uses R3=1k and C3=2.2u.",
-    "A feedback circuit based on an RC network powered by a 12V DC source. The main path is a low-pass RC stage. The circuit uses two cascaded RC stages. The feedback is implemented using a resistive-capacitive feedback network, from node out to node in.",
+    "A 3-stage RC high-pass filter implemented as an RC ladder network with the output taken at n1. It is powered by a 12V DC source. The filter type is high-pass. The network has 3 stage(s) connected in cascade. Stage 1 uses R1=4.7k and C1=1u. Stage 2 uses R2=1k and C2=220n. Stage 3 uses R3=47k and C3=10u.",
+    "A cascaded circuit composed of 3 stages powered by a 12V DC source. Stage 1 is an RC high-pass stage. Stage 2 is an RC low-pass stage. Stage 3 is a resistive divider stage. The output is taken from node n1.",
+    "A feedback circuit based on an RC network powered by a 12V DC source. The main path is a low-pass RC stage. The feedback is implemented using a resistive-capacitive feedback network, from node out to node in.",
+    "A 2-stage RC high-pass filter and a resistive load at the output. It is powered by a 3.3V DC source. The filter type is high-pass. The filter has 2 stage(s). Stage 1 uses R1=2.2k and C1=2.2u. Stage 2 uses R2=10k and C2=10u. The load resistor is RL=10k.",
 ]
 
-# =============================================================================
-# Session State
-# =============================================================================
-
+# Initialize session state
 if "generations" not in st.session_state:
-    # Load history from disk on first run
     st.session_state.generations = load_all_generations()
 if "current_result" not in st.session_state:
     st.session_state.current_result = None
@@ -71,35 +55,19 @@ if "model_loaded" not in st.session_state:
 if "is_generating" not in st.session_state:
     st.session_state.is_generating = False
 
-# =============================================================================
-# Model Loading
-# =============================================================================
-
 
 @st.cache_resource
 def load_model():
-    """Load the circuit generation model (cached)."""
+    """Load T5 model (cached to avoid reloading on each rerun)."""
     generator = get_generator()
     success = generator.load()
     return generator if success else None
 
 
-# =============================================================================
-# Generation Function
-# =============================================================================
-
-
 def generate_circuit(prompt: str) -> dict:
     """
-    Generate a circuit from a text prompt.
-
-    Returns a result dictionary with:
-    - id, prompt, timestamp
-    - status: 'completed' or 'error'
-    - netlist: cleaned SPICE netlist
-    - svg: circuit diagram SVG
-    - components: list of component info
-    - error: error message if failed
+    Main generation pipeline: prompt -> T5 -> clean -> validate -> draw.
+    Returns result dict with netlist, SVG, components, and status.
     """
     result = {
         "id": f"gen_{int(time.time())}",
@@ -107,42 +75,38 @@ def generate_circuit(prompt: str) -> dict:
         "timestamp": time.strftime("%d %b, %H:%M"),
         "status": "error",
         "netlist": None,
-        "svg_display": None,  # White on transparent (for UI)
-        "svg_download": None,  # Black on white (for download)
+        "svg_display": None,
+        "svg_download": None,
         "components": None,
         "error": None,
     }
 
     try:
-        # Get generator
         generator = load_model()
         if generator is None:
             result["error"] = "Failed to load model"
             return result
 
-        # Generate netlist (direct, no normalization - same as wen.py)
+        # Generate raw netlist from T5
         raw_netlist = generator.generate(prompt)
 
-        # Clean netlist (same as wen.py)
+        # Clean and validate
         netlist = clean_netlist(raw_netlist)
         result["netlist"] = netlist
 
-        # Validate
         is_valid, message = validate_netlist(netlist)
         if not is_valid:
             result["error"] = f"Validation failed: {message}"
             result["status"] = "error"
             return result
 
-        # Draw circuit
+        # Draw circuit diagram
         circuit_image = draw_circuit(netlist)
         if circuit_image:
             result["svg_display"] = circuit_image.svg_display
             result["svg_download"] = circuit_image.svg_download
 
-        # Get component info
         result["components"] = get_component_info(netlist)
-
         result["status"] = "completed"
 
     except Exception as e:
@@ -152,13 +116,10 @@ def generate_circuit(prompt: str) -> dict:
     return result
 
 
-# =============================================================================
 # UI Components
-# =============================================================================
 
 
 def render_header():
-    """Render the app header with logo and title."""
     st.markdown(
         f"""
         <div class="header-container">
@@ -173,7 +134,6 @@ def render_header():
 
 
 def render_empty_state(title: str, desc: str):
-    """Render an empty state box."""
     st.markdown(
         f"""
         <div class="empty-box">
@@ -187,8 +147,7 @@ def render_empty_state(title: str, desc: str):
 
 
 def render_result(result: dict):
-    """Render the generation result."""
-
+    """Display generation result: circuit diagram, netlist, and components."""
     if result["status"] == "error":
         st.error(f"Error: {result.get('error', 'Unknown error')}")
         if result.get("netlist"):
@@ -196,9 +155,8 @@ def render_result(result: dict):
                 st.code(result["netlist"], language="text")
         return
 
-    # Circuit diagram (display version - white on dark)
+    # Circuit diagram
     if result.get("svg_display"):
-        # Escape any problematic characters in SVG
         svg_safe = result["svg_display"].replace("\n", " ")
         st.markdown(
             f"""
@@ -209,7 +167,7 @@ def render_result(result: dict):
             unsafe_allow_html=True,
         )
 
-    # Tabs for details
+    # Tabs for netlist and components
     tab_netlist, tab_components = st.tabs(["SPICE Netlist", "Components"])
 
     with tab_netlist:
@@ -233,7 +191,7 @@ def render_result(result: dict):
 
 
 def render_history_card(g: dict, idx: int):
-    """Render a single history card with actions."""
+    """Render a history item with Load/View and Delete buttons."""
     badge = "badge-ok" if g["status"] == "completed" else "badge-err"
     badge_txt = "OK" if g["status"] == "completed" else "Err"
 
@@ -254,7 +212,6 @@ def render_history_card(g: dict, idx: int):
         )
 
     with col_view:
-        # Check if this item is already loaded
         is_loaded = (
             st.session_state.current_result
             and st.session_state.current_result.get("id") == g["id"]
@@ -263,11 +220,9 @@ def render_history_card(g: dict, idx: int):
         btn_label = "View" if is_loaded else "Load"
         if st.button(btn_label, key=f"v{idx}", use_container_width=True):
             if not is_loaded:
-                # Load full data from disk
                 full_data = load_generation(g["id"])
                 st.session_state.current_result = full_data if full_data else g
-                st.session_state.prefill_prompt = g["prompt"]  # Fill input
-            # Flag to click Generate tab
+                st.session_state.prefill_prompt = g["prompt"]
             st.session_state.click_generate_tab = True
             st.rerun()
         st.markdown("</div>", unsafe_allow_html=True)
@@ -275,7 +230,6 @@ def render_history_card(g: dict, idx: int):
     with col_x:
         st.markdown('<div class="hist-x">', unsafe_allow_html=True)
         if st.button("\u2715", key=f"x{idx}"):
-            # Delete from disk
             delete_generation(g["id"])
             st.session_state.generations = [
                 x for x in st.session_state.generations if x["id"] != g["id"]
@@ -289,13 +243,10 @@ def render_history_card(g: dict, idx: int):
         st.markdown("</div>", unsafe_allow_html=True)
 
 
-# =============================================================================
 # Main App
-# =============================================================================
 
 render_header()
 
-# Model loading status
 generator = load_model()
 if generator is None:
     st.error(
@@ -305,9 +256,8 @@ if generator is None:
 
 tab_gen, tab_hist = st.tabs(["Generate", "History"])
 
-# Auto-click Generate tab if coming from Load button
+# JS hack to switch tabs programmatically (Streamlit doesn't support this natively)
 if st.session_state.get("click_generate_tab", False):
-    # Increment counter to force unique script each time
     if "tab_click_counter" not in st.session_state:
         st.session_state.tab_click_counter = 0
     st.session_state.tab_click_counter += 1
@@ -319,34 +269,26 @@ if st.session_state.get("click_generate_tab", False):
     components.html(
         f"""
         <script>
-            // Execution #{counter}
             const tabs = window.parent.document.querySelectorAll('[data-baseweb="tab"]');
-            if (tabs.length > 0) {{
-                tabs[0].click();
-            }}
+            if (tabs.length > 0) {{ tabs[0].click(); }}
         </script>
         <!-- {counter} -->
         """,
         height=0,
     )
 
-# =============================================================================
 # Generate Tab
-# =============================================================================
-
 with tab_gen:
-    # Check if generating (disable buttons)
     is_busy = st.session_state.is_generating
-
     left, right = st.columns([1, 1], gap="large")
 
-    # Left Column - Input
+    # Left column: input
     with left:
         st.markdown(
             '<p class="label">Describe your circuit</p>', unsafe_allow_html=True
         )
 
-        # Get prefilled prompt from quickstart or current result
+        # Pre-fill from quickstart or loaded history
         default_value = ""
         if "prefill_prompt" in st.session_state:
             default_value = st.session_state.prefill_prompt
@@ -356,7 +298,7 @@ with tab_gen:
         prompt = st.text_area(
             "prompt",
             value=default_value,
-            placeholder="Example: LED circuit with 9V battery and 330 ohm resistor...",
+            placeholder="Example: A 2-stage RC high-pass filter powered by a 5V DC source...",
             height=140,
             label_visibility="collapsed",
             disabled=is_busy,
@@ -380,17 +322,16 @@ with tab_gen:
             )
             if new_btn and st.session_state.current_result:
                 st.session_state.current_result = None
-                st.session_state.prefill_prompt = ""  # Clear input
+                st.session_state.prefill_prompt = ""
                 st.rerun()
 
         st.markdown("<br>", unsafe_allow_html=True)
         st.markdown('<p class="label">Quick start</p>', unsafe_allow_html=True)
 
-        # 3 examples with compact spacing - use container
+        # Example prompts
         with st.container():
             st.markdown('<div class="quickstart-btns">', unsafe_allow_html=True)
             for i, example in enumerate(EXAMPLES):
-                # Truncate to ~180 chars, add number prefix
                 display_text = (
                     f"{i+1}. {example[:180]}..."
                     if len(example) > 180
@@ -406,7 +347,7 @@ with tab_gen:
                     st.rerun()
             st.markdown("</div>", unsafe_allow_html=True)
 
-    # Right Column - Result
+    # Right column: result
     with right:
         st.markdown('<p class="label">Result</p>', unsafe_allow_html=True)
 
@@ -422,7 +363,7 @@ with tab_gen:
                 if r.get("svg_download"):
                     st.download_button(
                         "\u2193  Download SVG",
-                        data=r["svg_download"],  # Black on white version
+                        data=r["svg_download"],
                         file_name=f"circuit_{r['id']}.svg",
                         mime="image/svg+xml",
                         use_container_width=True,
@@ -446,31 +387,30 @@ with tab_gen:
                 )
                 st.markdown("</div>", unsafe_allow_html=True)
 
-            # Handle redo
             if redo_btn and not is_busy:
                 st.session_state.is_generating = True
                 st.rerun()
         else:
             render_empty_state("No circuit yet", "Enter a prompt and click Generate")
 
-    # Handle generation (with loading state)
+    # Handle new generation
     if gen_btn and prompt.strip() and not is_busy:
         st.session_state.is_generating = True
         st.session_state.pending_prompt = prompt.strip()
         st.rerun()
 
+    # Handle quickstart click
     if "run_ex" in st.session_state and not is_busy:
         st.session_state.is_generating = True
         st.session_state.pending_prompt = st.session_state.run_ex
-        st.session_state.prefill_prompt = st.session_state.run_ex  # Also fill input
+        st.session_state.prefill_prompt = st.session_state.run_ex
         del st.session_state.run_ex
         st.rerun()
 
-    # Actually run generation when is_generating is True
+    # Run generation (after rerun with is_generating=True)
     if st.session_state.is_generating and "pending_prompt" in st.session_state:
         with st.spinner("Generating circuit..."):
             r = generate_circuit(st.session_state.pending_prompt)
-        # Save to disk
         save_generation(r)
         st.session_state.current_result = r
         st.session_state.generations.append(r)
@@ -478,7 +418,7 @@ with tab_gen:
         del st.session_state.pending_prompt
         st.rerun()
 
-    # Handle redo generation
+    # Handle redo (regenerate with same prompt)
     if (
         st.session_state.is_generating
         and st.session_state.current_result
@@ -486,17 +426,13 @@ with tab_gen:
     ):
         with st.spinner("Regenerating circuit..."):
             r = generate_circuit(st.session_state.current_result["prompt"])
-        # Save to disk
         save_generation(r)
         st.session_state.current_result = r
         st.session_state.generations.append(r)
         st.session_state.is_generating = False
         st.rerun()
 
-# =============================================================================
 # History Tab
-# =============================================================================
-
 with tab_hist:
     if st.session_state.generations:
         total = len(st.session_state.generations)
@@ -504,7 +440,6 @@ with tab_hist:
             1 for g in st.session_state.generations if g["status"] == "completed"
         )
 
-        # Stats + Clear
         col_stats, col_clear = st.columns([5, 1])
 
         with col_stats:
@@ -527,7 +462,6 @@ with tab_hist:
         with col_clear:
             st.markdown('<div class="btn-clear">', unsafe_allow_html=True)
             if st.button("Clear all", use_container_width=True):
-                # Clear from disk
                 clear_all_history()
                 st.session_state.generations = []
                 st.session_state.current_result = None
@@ -536,7 +470,7 @@ with tab_hist:
 
         st.markdown('<div class="hist-separator"></div>', unsafe_allow_html=True)
 
-        # History items
+        # Display history cards (newest first)
         for idx, g in enumerate(reversed(st.session_state.generations)):
             render_history_card(g, idx)
 
